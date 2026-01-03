@@ -60,9 +60,9 @@ npm run dev
 6️⃣ Open the website
 Click the localhost link shown in terminal (usually http://localhost:5173)
 
-⚠️ Tip: Always run npm install first if you just cloned the repo.
+</details> ```
 
-</details>
+⚠️ Tip: Always run npm install first if you just cloned the repo.
 
 📁 Project Structure (Treasure Map 🗺️)
 <details> <summary>Click to expand folder structure 👇🏽</summary>
