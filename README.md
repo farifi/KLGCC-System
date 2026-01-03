@@ -27,12 +27,11 @@ node -v   # Should print "v24.12.0"
 
 # Verify npm version
 npm -v    # Should print "11.6.2"
-
 Git (optional, if you want to clone the project)
+
 </details>
 
-
-* 🚀 How to Run (Follow the arrows ➡️)
+🚀 How to Run (Follow the arrows ➡️)
 <details> <summary>Click to expand instructions 🏁</summary>
 
 1️⃣ Open terminal
@@ -89,13 +88,3 @@ KLGCC System/
 └── 📖 README.md
 
 </details>
-
-💡 Pro Tips
-
-⚠️ Always leave a blank line between headings, paragraphs, and code blocks
-
-✅ Use triple backticks ``` for commands or code — GitHub will format nicely
-
-🎯 Use collapsible sections to keep README clean and readable
-
-🌟 Emojis make it fun and easy to scan
