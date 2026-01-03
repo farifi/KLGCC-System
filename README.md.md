@@ -9,6 +9,9 @@
 * **Download node from this website, LTS version untuk stability** 
 👉🏽 https://nodejs.org/en/download
 
+* **Can either export or git clone**
+👉🏽 git clone https://github.com/your-username/my-project.git
+cd my-project
 
 * **Then, open terminal** 
 
