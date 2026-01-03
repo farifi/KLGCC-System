@@ -61,10 +61,9 @@ Click the localhost link shown in terminal (usually http://localhost:5173)
 ⚠️ Tip: Always run npm install first if you just cloned the repo.
 
 </details> 
+
 📁 Project Structure (Treasure Map 🗺️)
-<details> <summary>Click to expand folder structure 👇🏽</summary>
-pgsql
-Copy code
+<details>bash<summary>Click to expand folder structure 👇🏽</summary>
 KLGCC System/
 ├── 🖥 frontend/
 │   ├── 📦 node_modules/        # Node packages (⚠️ don’t touch!)
@@ -85,4 +84,5 @@ KLGCC System/
 │   └── package-lock.json
 ├── 🗄 backend/                # Work in progress
 └── 📖 README.md
+
 </details>
