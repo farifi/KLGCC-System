@@ -1,0 +1,83 @@
+.sidebar {
+  /* Removed strong backdrop/box-shadow to match the cleaner look of the image */
+  /* If the image sidebar is truly transparent/integrated, we can remove background entirely or keep it very subtle */
+  /* background: rgba(255, 255, 255, 0.45);  <-- Removed or made much lighter */
+  
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 12px; /* Add some spacing if needed */
+}
+
+.logo-box {
+  margin-bottom: 24px;
+  /* Adjust logo styling if needed */
+}
+
+.menu-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.menu-header {
+  padding-left: 18px;
+  color: #888; /* or slightly warmer grey/brown from image */
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.5px;
+}
+
+.sidebar ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-radius: 12px; /* Use rounded corners but not full pill unless requested, image looks rounded rect */
+  cursor: pointer;
+  font-weight: 500;
+  color: #7a7a7a;
+  transition: all 0.2s ease;
+  font-size: 15px;
+}
+
+.sidebar li:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: #333;
+}
+
+/* Active State Styling */
+.sidebar li.active {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2));
+  backdrop-filter: blur(10px);
+  color: #1a1a2e; /* Dark navy/black text */
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Remove the old vertical bar */
+.sidebar li.active::before {
+  content: none;
+}
+
+.sidebar-icon {
+  opacity: 0.8;
+}
+
+.sidebar li.active .sidebar-icon {
+  opacity: 1;
+  color: #1a1a2e; /* Match text color */
+}
