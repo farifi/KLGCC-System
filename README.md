@@ -1,60 +1,83 @@
 # 🏌🏽‍♂️🏌🏽‍♂️🏌🏽‍♂️ KLGCC GOLF BOOKING SYSTEM 🏌🏽‍♂️🏌🏽‍♂️🏌🏽‍♂️
-
-## ICT502 DATABASE ENGINEERING – GROUP PROJECT
+**ICT502 DATABASE ENGINEERING – GROUP PROJECT**
 
 ---
 
-### Pre requisite (Kena install before boleh run 😊)
+## ⚡ About the Project
 
-* **Download node from this website, LTS version untuk stability** 
-👉🏽 https://nodejs.org/en/download
+Welcome to **KLGCC Golf Booking System**! 🏌️‍♂️  
+This is a simple, interactive system for **booking golf sessions** at KLGCC.  
+Built with **Node.js + React.js**, it’s easy to set up and explore!  
 
+---
 
-* **Then, open terminal** 
+## 🛠 Pre-requisites (Install these first 😊)
 
-&nbsp;	# Verify the Node.js version:
+<details>
+<summary>Click to expand ✅</summary>
 
-&nbsp;	node -v # Should print "v24.12.0".
+- **Node.js (LTS version recommended)**  
+👉🏽 [Node.js Download](https://nodejs.org/en/download)
 
-&nbsp;	# Verify npm version:
+- **Check installation in terminal:**
 
-&nbsp;	npm -v # Should print "11.6.2".
+```bash
+# Verify Node.js version
+node -v   # Should print "v24.12.0"
 
+# Verify npm version
+npm -v    # Should print "11.6.2"
 
-* **Git (optional kalau nak)**
-
-
-**🚀 How to Run**
-
-&nbsp;  1. open terminal
-
-&nbsp;  2. cd "KLGCC System"
-
-&nbsp;  3. cd Front_end
-
-&nbsp;  4. cd KLGCC
-
-&nbsp;  5. Run 'npm install' to install dependencies
-
-&nbsp;  6. Run 'npm run dev' to start the frontend server
-
-&nbsp;  7. click localhost link to open the website
+Git (optional, if you want to clone the project)
+</details>
 
 
+* 🚀 How to Run (Follow the arrows ➡️)
+<details> <summary>Click to expand instructions 🏁</summary>
 
-### \## 📁 Project Structure 👇🏽👇🏽
+1️⃣ Open terminal
 
+2️⃣ Navigate to project folder:
+
+cd "KLGCC System"
+
+
+3️⃣ Go to frontend folder:
+
+cd Front_end
+cd KLGCC
+
+
+4️⃣ Install dependencies:
+
+npm install
+
+
+5️⃣ Start frontend server:
+
+npm run dev
+
+
+6️⃣ Open the website
+Click the localhost link shown in terminal (usually http://localhost:5173)
+
+⚠️ Tip: Always run npm install first if you just cloned the repo.
+
+</details>
+
+📁 Project Structure (Treasure Map 🗺️)
+<details> <summary>Click to expand folder structure 👇🏽</summary>
 KLGCC System/
 ├── 🖥 frontend/
-│   ├── 📦 node_modules/         # Node packages (⚠️ don’t touch!)
-│   ├── 🌐 public/               # Public files like images
-│   ├── 📝 src/                  # Source code
-│   │   ├── 🖼 assets/            # Images
-│   │   ├── 🧩 Components/       # Sidebar, header, etc
-│   │   ├── 📄 Pages/            # Dashboard, etc
-│   │   ├── 🎨 CSS files         # Styling for App & main (no need to touch)
-│   │   ├── 🔗 Api.jsx           # Connects to backend
-│   │   ├── 🔑 AuthContext.jsx   # Login & Register functions
+│   ├── 📦 node_modules/        # Node packages (⚠️ don’t touch!)
+│   ├── 🌐 public/             # Public files like images
+│   ├── 📝 src/                # Source code
+│   │   ├── 🖼 assets/          # Images
+│   │   ├── 🧩 Components/      # Sidebar, header, etc
+│   │   ├── 📄 Pages/           # Dashboard, etc
+│   │   ├── 🎨 CSS files        # Styling for App & main (no need to touch)
+│   │   ├── 🔗 Api.jsx          # Connects to backend
+│   │   ├── 🔑 AuthContext.jsx  # Login & Register functions
 │   │   ├── ⚙️ App.jsx           # Router & navigation
 │   │   └── 🚀 main.jsx          # Entry point (⚠️ don’t touch)
 │   ├── .gitignore
@@ -62,6 +85,17 @@ KLGCC System/
 │   ├── index.html
 │   ├── package.json
 │   └── package-lock.json
-│
 ├── 🗄 backend/                # Work in progress
 └── 📖 README.md
+
+</details>
+
+💡 Pro Tips
+
+⚠️ Always leave a blank line between headings, paragraphs, and code blocks
+
+✅ Use triple backticks ``` for commands or code — GitHub will format nicely
+
+🎯 Use collapsible sections to keep README clean and readable
+
+🌟 Emojis make it fun and easy to scan
