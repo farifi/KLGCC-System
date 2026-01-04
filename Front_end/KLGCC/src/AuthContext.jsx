@@ -10,10 +10,11 @@ export const AuthProvider = ({ children }) => {
         try {
             const res = await API.post('/api/auth/signup', { full_name, email, phone_number, password });
             alert(res.data.message || "Registered successfully");
-            return true;
+            console.log(res.data);
+            return res;
         } catch (err) {
             alert(err.response?.data?.message || "Registration failed");
-            return false;
+            return err.response?.data?.message;
         }
     };
 
@@ -23,10 +24,10 @@ export const AuthProvider = ({ children }) => {
             const userData  = { email: res.data.email, customerId: res.data.customerId };
             setUser(userData);
             localStorage.setItem("user", JSON.stringify(userData));  
-            return true;
+            return res;
         } catch  (err) {
             alert(err.response?.data?.message || "Invalid email or password");
-            return false;
+            return err.response?.data?.message;
         }
     };
 
@@ -34,7 +35,7 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         localStorage.removeItem("user");
         console.log("Logged out successfully!");
-        alert("Logged out successfully!")
+        alert("Logged out successfully!");
     };
 
     return (
@@ -44,4 +45,4 @@ export const AuthProvider = ({ children }) => {
     );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export default useAuth = () => useContext(AuthContext);

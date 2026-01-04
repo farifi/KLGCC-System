@@ -26,14 +26,22 @@ const Login = () => {
             return;
         }
         
+        let result;
         try {
             if (activeTab === 'login'){
-                await login(email, password);
+                result = await login(email, password);
             } else {
-                await register(full_name, email, phone_number, password);
+                result = await register(full_name, email, phone_number, password);
             }
 
-            navigate("/dashboard");
+            if (result.data.message === "Staff login successful" || result.data.message === "Customer login successful"){
+                navigate("/dashboard");
+            } else if (result.data.message === "Staff registered successfully" || result.data.message === "Customer registered successfully") {
+                navigate("/dashboard");
+            } else {
+                setError(result.data.message || `${activeTab === 'login' ? 'Login' : 'Sign up' } failed. Please try again.`);      
+            }
+
         } catch (err) {
             setError(err.response?.data?.message || `${activeTab === 'login' ? 'Login' : 'Sign up' } failed. Please try again.`);      
         }

@@ -3,15 +3,15 @@ import Login from './Pages/Login';
 import Dashboard from './Pages/Dashboard'
 import { AuthProvider } from './AuthContext';
 
-// const ProtectedRoute = ({ children }) => {
-//   const { user } = useAuth();
+const ProtectedRoute = ({ children }) => {
+  const { user } = useAuth();
   
-//   if (user == null) {
-//     return <Navigate to="/login"/>
-//   }
+  if (user == null) {
+    return <Navigate to="/login"/>
+  }
 
-//   return children;
-// };
+  return children;
+};
 
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" />} />
+          <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
