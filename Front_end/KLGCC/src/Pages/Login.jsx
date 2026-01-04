@@ -1,4 +1,4 @@
-import { use, useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../AuthContext';
 import { useNavigate } from "react-router-dom"; 
 import { Link } from "react-router-dom";
@@ -10,7 +10,8 @@ import "./Pages CSS files/Login.css";
 const Login = () => {
     const { login, register } = useAuth();
     const navigate = useNavigate();
-    const [username, setUsername] = useState('');
+    const [full_name, setFullName] = useState('');
+    const [phone_number, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('')
     const [error, setError] = useState('');
@@ -20,16 +21,16 @@ const Login = () => {
         event.preventDefault();
         setError('')
 
-        if (!username || !password) {
+        if ((activeTab === 'login' && (!email || !password)) || (activeTab === 'signup' && (!full_name || !email || !phone_number || !password))) {
             setError('Please fill in all fields');            
             return;
         }
         
         try {
             if (activeTab === 'login'){
-                await login(username, password);
+                await login(email, password);
             } else {
-                await register(username, email, password);
+                await register(full_name, email, phone_number, password);
             }
 
             navigate("/dashboard");
@@ -55,9 +56,6 @@ const Login = () => {
                 </div>
                 
                 <form className={`login-form ${activeTab}-form`} onSubmit={handleSubmit}>
-                    <label>Username</label>
-                    <input type="username" placeholder="Enter your username" value={username} onChange={(e) => setUsername(e.target.value)} />
-
                     <label>Email Address</label>
                     <input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
 
@@ -68,6 +66,12 @@ const Login = () => {
                         <>
                         <label>Confirm Password</label>
                         <input type="password" placeholder="Confirm your password" />
+
+                        <label>Full Name</label>
+                        <input type="username" placeholder="Enter your full name " value={full_name} onChange={(e) => setFullName(e.target.value)} />
+                        
+                        <label>Phone Number</label>
+                        <input type="number" placeholder="Enter your phone number" value={phone_number} onChange={(e) => setPhoneNumber(e.target.value)} />
                         </>
                     )}
                     {error && <p className="error">{error}</p>}
