@@ -9,29 +9,25 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (username, email, password) => {
         try {
-            const res = await axios.post('http://localhost:5000/register', { username, email, password });
-            alert(res.data.message);
+            const res = await API.post('/api/auth/signup', { username, email, password });
+            alert(res.data.message || "Registered successfully");
+            return true;
         } catch (err) {
             alert(err.response?.data?.message || "Registration failed");
+            return false;
         }
     };
 
     const login = async (email, password) => {
         try{
-            const res = await axios.post("http://localhost:5000/login", {email, password})
-            
-            if (res.data.username) {
-                const userData  = { username: res.data.username, email: res.data.email,};
-
+            const res = await API.post("/api/auth/login", { email, password });
+            const userData  = { email: res.data.email, customerId: res.data.customerId };
             setUser(userData);
             localStorage.setItem("user", JSON.stringify(userData));  
-            
-            return true
-            } else {
-                alert("Invalid Password or username or You don't have an account yet. Sign up an account!");
-            }
+            return true;
         } catch  (err) {
-            alert("Invalid Password or username or You don't have an account yet. Sign up an account!");
+            alert(err.response?.data?.message || "Invalid email or password");
+            return false;
         }
     };
 
