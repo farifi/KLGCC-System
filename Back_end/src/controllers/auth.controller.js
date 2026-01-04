@@ -3,14 +3,15 @@ const { getConnection } = require('../config/db.js');
 const oracledb = require('oracledb');
 
 exports.signup = async (req, res) => {
-    const { full_name, username, email, phone_number, password } = req.body;
+    const { full_name, email, phone_number, password } = req.body;
     let conn;
 
     try{
-        const isStaff = email.endsWith('@klgcc.com'); // Determine role
+        conn = await getConnection();
+
+        const isStaff = email.endsWith('@klgcc.com');
         const table = isStaff ? 'STAFF' : 'CUSTOMER';
         const idColumn = isStaff ? 'STAFF_ID' : 'CUSTOMER_ID';
-        const seq = isStaff ? 'STAFF_SEQ.NEXTVAL' : 'CUSTOMER_SEQ.NEXTVAL';
         
         // if email already exists
         const existing = await conn.execute(
@@ -27,9 +28,9 @@ exports.signup = async (req, res) => {
         if (isStaff) {
             await conn.execute(
                 `INSERT INTO STAFF (STAFF_ID, FULL_NAME, EMAIL, PHONE, PASSWORD_HASH)
-                 VALUES (${seq}, :full_name, :email, :phone, :password_hash)`,
+                 VALUES (STAFF_SEQ.NEXTVAL, :full_name, :email, :phone, :password_hash)`,
                  {
-                    full_name: full_name || username,
+                    full_name: full_name,
                     email,
                     phone: phone_number || null,
                     password_hash: passwordHash 
@@ -39,9 +40,9 @@ exports.signup = async (req, res) => {
         } else {
             await conn.execute(
                 `INSERT INTO CUSTOMER (CUSTOMER_ID, FULL_NAME, EMAIL, PHONE_NUMBER, PASSWORD_HASH)
-                 VALUES (${seq}, :full_name, :email, :phone, :password_hash)`,
+                 VALUES (CUSTOMER_SEQ.NEXTVAL, :full_name, :email, :phone, :password_hash)`,
                 {
-                    full_name: full_name || username,
+                    full_name: full_name,
                     email,
                     phone: phone_number || null,
                     password_hash: passwordHash
@@ -76,14 +77,15 @@ exports.login = async (req, res) => {
         conn = await getConnection();
         
         let query, binds;
+        const isStaff = email.endsWith('@klgcc.com');
 
         if (email.endsWith('@klgcc.com')) {
             // Staff login
-            query = `SELECT STAFF_ID, EMAIL FROM STAFF WHERE EMAIL = :email`;
+            query = `SELECT STAFF_ID, EMAIL, PASSWORD_HASH FROM STAFF WHERE EMAIL = :email`;
             binds = [email];
         } else {
             // Customer login
-            query = `SELECT CUSTOMER_ID, PASSWORD_HASH, EMAIL FROM CUSTOMER WHERE EMAIL = :email`;
+            query = `SELECT CUSTOMER_ID, EMAIL, PASSWORD_HASH FROM CUSTOMER WHERE EMAIL = :email`;
             binds = [email];
         }
 
@@ -94,8 +96,9 @@ exports.login = async (req, res) => {
         }
 
         const user = result.rows[0];
-
+        
         const isMatch = await bcrypt.compare(password, user.PASSWORD_HASH);
+
         if (!isMatch) {
             return res.status(401).json({ message: "Invalid email or password" });
         }
