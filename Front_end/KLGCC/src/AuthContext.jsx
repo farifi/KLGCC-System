@@ -1,15 +1,14 @@
 import {createContext, useContext, useState } from "react";
 import API from "./Api.jsx";
-import axios from 'axios';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
-    const register = async (username, email, password) => {
+    const register = async (full_name, email, phone_number, password) => {
         try {
-            const res = await API.post('/api/auth/signup', { username, email, password });
+            const res = await API.post('/api/auth/signup', { full_name, email, phone_number, password });
             alert(res.data.message || "Registered successfully");
             return true;
         } catch (err) {
