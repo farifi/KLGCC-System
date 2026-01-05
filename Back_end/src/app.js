@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
 const authRoutes = require("./auth");
+const staffRoutes = require("./staffRoutes");
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.use(session({
 }));
 
 app.use("/api/auth", authRoutes);
+app.use("/api/staff", staffRoutes);
 
 module.exports = app;
