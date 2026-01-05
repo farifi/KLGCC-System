@@ -1,31 +1,27 @@
 import GlassCard from "./GlassCard";
 import "./Components CSS files/EmployeeTable.css";
 
-const EmployeeTable = ({ employees }) => {
+const EmployeeTable = ({ staffs = []  }) => {
   return (
     <GlassCard className="employee-table">
-      <h2>Employees</h2>
+      <h2>STAFF</h2>
       <div className="employee-table-container">
         <table>
           <thead>
             <tr>
               <th>ID</th>
               <th>Name</th>
-              <th>Role</th>
-              <th>Performance</th>
+              <th>Email</th>
+              <th>Phone No</th>
             </tr>
           </thead>
           <tbody>
-            {employees.map(emp => (
-              <tr key={emp.id}>
-                <td>{emp.id}</td>
-                <td>{emp.name}</td>
-                <td>{emp.role}</td>
-                <td>
-                  <div className="progress-bar">
-                    <div className="progress-fill" style={{ width: `${emp.performance}%` }}></div>
-                  </div>
-                </td>
+            {staffs.map(stf => (
+              <tr key={stf.STAFF_ID}>
+                <td>{stf.STAFF_ID}</td>
+                <td>{stf.FULL_NAME}</td>
+                <td>{stf.EMAIL}</td>
+                <td>{stf.PHONE}</td>
               </tr>
             ))}
           </tbody>
