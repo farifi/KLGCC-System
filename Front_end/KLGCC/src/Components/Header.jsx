@@ -12,7 +12,6 @@ const Header = ({ toggleSidebar }) => {
         <h1>Dashboard</h1>
       </div>
       <GlassCard className="profile">
-        <img src="https://i.pravatar.cc/40" alt="profile" />
         <span>Carla Sanford</span>
       </GlassCard>
     </div>

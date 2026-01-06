@@ -21,6 +21,7 @@ const Sidebar = () => {
     const isActive = (path) => {
         // Exact match for root or dashboard
         if (path === "Dashboard" && (location.pathname === "/" || location.pathname === "/dashboard")) return true;
+        if (path === "Staff" && (location.pathname === "/" || location.pathname === "/staff")) return true;
         
         const route = `/${path.toLowerCase().replace(/\s+/g, '-')}`;
         return location.pathname.startsWith(route);
@@ -33,18 +34,9 @@ const Sidebar = () => {
 
     const mainMenuItems = [
         { label: "Dashboard", icon: LayoutDashboard },
-        { label: "Tasks", icon: ListTodo },
-        { label: "Calendar", icon: CalendarIcon },
-        { label: "Settings", icon: Settings },
-        { label: "Support", icon: Headphones },
-    ];
-
-    const teamManagementItems = [
-        { label: "Performance", icon: TrendingUp },
-        { label: "Payrolls", icon: Receipt },
-        { label: "Invoice", icon: FileText },
-        { label: "Employees", icon: Users },
-        { label: "Meeting", icon: Briefcase },
+        { label: "Staff", icon: ListTodo },
+        { label: "Booking", icon: CalendarIcon },
+        { label: "Equipment", icon: Settings },
     ];
 
     const renderMenuItem = (item) => {
@@ -73,13 +65,6 @@ const Sidebar = () => {
                 <p className="menu-header">Main Menu</p>
                 <ul>
                     {mainMenuItems.map(renderMenuItem)}
-                </ul>
-            </div>
-
-            <div className="menu-section">
-                <p className="menu-header">Team Management</p>
-                <ul>
-                    {teamManagementItems.map(renderMenuItem)}
                 </ul>
             </div>
         </div>

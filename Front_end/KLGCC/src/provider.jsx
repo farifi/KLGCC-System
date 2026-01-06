@@ -1,5 +1,5 @@
 import { AuthProvider } from "./AuthContext";
-import { StaffProvider } from "./apiContext";
+import { StaffProvider } from "./StaffContext";
 
 const Providers = ({ children }) => {
   return (

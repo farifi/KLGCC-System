@@ -7,7 +7,7 @@ import logo from '../assets/logo_klgcc_black.png';
 
 import "./Pages CSS files/Login.css";
 
-const Login = () => {
+const LandingPage = () => {
     const { login, register } = useAuth();
     const navigate = useNavigate();
     const [full_name, setFullName] = useState('');
@@ -93,4 +93,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default LandingPage;

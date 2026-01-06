@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Sidebar from "../Components/Sidebar.jsx";
 import Header from "../Components/Header.jsx";
 import Table from "../Components/Table.jsx";
-import { useStaff } from "../apiContext.jsx";
+import { useStaff } from "../StaffContext.jsx";
 import "./Pages CSS files/DefaultTheme.css";
 
 const Staff = () => {
@@ -28,8 +28,8 @@ const Staff = () => {
                     <button onClick={() => handleEdit(row)}>✏️</button>
                     <button onClick={() => handleDelete(row.STAFF_ID)}>🗑</button>
                 </div>
-      )
-    }
+            )
+        }
     ];
 
     const handleEdit = (staff) => {

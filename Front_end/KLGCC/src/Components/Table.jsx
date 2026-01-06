@@ -1,5 +1,5 @@
 import GlassCard from "./GlassCard";
-import "./Components CSS files/EmployeeTable.css";
+import "./Components CSS files/Table.css";
 
 const Table = ({ title, columns= [], data = [] }) => {
   return (
