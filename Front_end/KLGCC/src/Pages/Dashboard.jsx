@@ -22,8 +22,7 @@ const Dashboard = () => {
         <div className="default-main">
           <Header toggleSidebar={toggleSidebar} />
           <div className="default-content">
-            <StatsCards />
-            <KPIChart />
+            
           </div>
         </div>
       </div>

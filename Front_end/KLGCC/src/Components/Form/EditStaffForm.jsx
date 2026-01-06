@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 
-const EditStaffForm = ({}) => {
+const EditStaffForm = ({ staff, onCancel, onSave}) => {
     const [formData, setFormData] = useState({
         FULL_NAME: "",
         EMAIL: "",
         PHONE: ""
     });
 
-    if (!staff) return null; // prevent rendering when staff is null
 
     useEffect(() => {
         if (staff) {
@@ -43,7 +42,7 @@ const EditStaffForm = ({}) => {
             </label>
 
             <div className="modal-actions">
-                <button type="button" onClick={onCancel}>Cancel</button>
+                <button type="button" onClick={() => onCancel()}>Cancel</button>
                 <button type="submit">Save</button>
             </div>
         </form>

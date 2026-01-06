@@ -27,8 +27,20 @@ export const StaffProvider = ({ children }) => {
         }
     } 
 
+    const updateStaff = async (staff) => {
+        try {
+            await API.put(`/api/staff/updateStaff/${staff.STAFF_ID}`, staff);
+            setStaffList(prev =>
+            prev.map(s => s.STAFF_ID === staff.STAFF_ID ? staff : s)
+            );
+        } catch (err) {
+            alert("Failed to update staff");
+        }
+};
+
+
     return (
-        <StaffContext.Provider value={{ staffList, fetchStaffList , deleteStaff}}>
+        <StaffContext.Provider value={{ staffList, fetchStaffList , deleteStaff, updateStaff}}>
             {children}
         </StaffContext.Provider>
     );

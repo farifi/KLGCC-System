@@ -1,15 +1,26 @@
 import { useState, useEffect } from "react";
+import { useStaff } from "../StaffContext.jsx";
+
 import Sidebar from "../Components/Sidebar.jsx";
 import Header from "../Components/Header.jsx";
 import Table from "../Components/Table.jsx";
-import { useStaff } from "../StaffContext.jsx";
+import Modal from "../Components/Modal.jsx";
+import EditStaffForm from "../Components/Form/EditStaffForm.jsx";
+
+
+
 import "./Pages CSS files/DefaultTheme.css";
 
 const Staff = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
     const closeSidebar = () => setIsSidebarOpen(false);
-    const { staffList, fetchStaffList } = useStaff();
+    
+    const { staffList, fetchStaffList, updateStaff, deleteStaff } = useStaff();
+
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [selectedStaff, setSelectedStaff] = useState(null);
 
     useEffect(() => {
         fetchStaffList();
@@ -33,7 +44,8 @@ const Staff = () => {
     ];
 
     const handleEdit = (staff) => {
-        console.log("Edit staff: ", staff);
+        setSelectedStaff(staff);
+        setIsEditOpen(true);
     }
 
     const handleDelete = (id) => {
@@ -56,6 +68,15 @@ const Staff = () => {
                     </div>
                 </div>
             </div>
+            <Modal isOpen={isEditOpen} title="Edit Staff" onClose={() => setIsEditOpen(false)}>
+                <EditStaffForm
+                    staff={selectedStaff}
+                    onCancel={() => setIsEditOpen(false)}
+                    onSave={(updatedStaff) => {
+                    updateStaff(updatedStaff); // update the context state
+                    setIsEditOpen(false);
+                }}/>
+            </Modal>
         </div>
     );
 };
