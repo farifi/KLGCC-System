@@ -12,11 +12,13 @@ import {
     Briefcase 
 } from "lucide-react";
 import './Components CSS files/Sidebar.css';
+import { useAuth } from "../AuthContext";
 import logo from '../assets/logo_klgcc_black.png'
 
 const Sidebar = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const { logout } = useAuth();
 
     const isActive = (path) => {
         // Exact match for root or dashboard
@@ -55,18 +57,27 @@ const Sidebar = () => {
         );
     };
 
+    const handleLogout = () => {
+        logout();
+        navigate("/LandingPage");
+    };
+
     return (
         <div className="sidebar">
             <div className="logo-box">
                 <img src={logo} alt="Kuala Lumpur Golf & Country Club Logo" />
             </div>
 
-            <div className="menu-section">
+            <div className="menu-section sidebar-main-menu">
                 <p className="menu-header">Main Menu</p>
                 <ul>
                     {mainMenuItems.map(renderMenuItem)}
                 </ul>
             </div>
+
+            <button className="sidebar-logout-button" onClick={handleLogout}>
+                Logout
+            </button>
         </div>
     );
 };

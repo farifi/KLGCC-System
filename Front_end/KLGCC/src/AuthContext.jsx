@@ -63,12 +63,19 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const logout = () => {
-        setUser(null);
-        localStorage.removeItem("user");
-        setAccessToken(null);
-        console.log("Logged out successfully!");
-        alert("Logged out successfully!");
+    const logout = async () => {
+        try {
+            await API.post("/api/auth/logout");
+        } catch (err) {
+            // even if backend fails, clear local auth state
+            console.error("Logout error:", err);
+        } finally {
+            setUser(null);
+            localStorage.removeItem("user");
+            setAccessToken(null);
+            console.log("Logged out successfully!");
+            alert("Logged out successfully!");
+        }
     };
 
     return (

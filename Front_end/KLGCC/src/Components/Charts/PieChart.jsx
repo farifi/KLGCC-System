@@ -1,11 +1,11 @@
 import React from "react";
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from "recharts";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const DEFAULT_COLORS = ["#f5a623", "#4fc3f7", "#2ecc71", "#e74c3c"];
 
-const PieChartComp = ({ data, nameKey, valueKey, title }) => (
-  <div style={{ height: 300 }}>
-    <h3>{title}</h3>
+const PieChartComp = ({ data, nameKey, valueKey, title, colors = DEFAULT_COLORS }) => (
+  <div style={{ height: 260 }}>
+    <h3 style={{ marginBottom: 12 }}>{title}</h3>
     <ResponsiveContainer>
       <PieChart>
         <Pie
@@ -13,9 +13,10 @@ const PieChartComp = ({ data, nameKey, valueKey, title }) => (
           nameKey={nameKey}
           dataKey={valueKey}
           label
->
+          outerRadius="80%"
+        >
           {data.map((_, index) => (
-            <Cell key={index} fill={COLORS[index % COLORS.length]} />
+            <Cell key={index} fill={colors[index % colors.length]} />
           ))}
         </Pie>
         <Tooltip />
