@@ -3,9 +3,9 @@ import "./Components CSS files/EmployeeTable.css";
 
 const Table = ({ title, columns= [], data = [] }) => {
   return (
-    <GlassCard className="employee-table">
+    <GlassCard className="table">
       {title && <h2>{title}</h2>}
-      <div className="employee-table-container">
+      <div className="table-container">
         <table>
           <thead>
             <tr>

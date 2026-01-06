@@ -1,17 +1,17 @@
-.employee-table {
+.table {
   padding: 0;
   overflow: visible; /* Changed from hidden to visible */
   display: flex;
   flex-direction: column;
 }
 
-.employee-table-container {
+.table-container {
   overflow-x: auto;
   width: 100%;
   /* Removed any height constraints if present */
 }
 
-.employee-table h2 {
+.table h2 {
   padding: 20px;
   font-size: 20px;
   font-weight: 700;
