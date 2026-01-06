@@ -1,5 +1,5 @@
 import {createContext, useContext, useState, useEffect } from "react";
-import API from "./Api.jsx";
+import API, { setAccessToken } from "./Api.jsx";
 
 const AuthContext = createContext();
 
@@ -49,15 +49,13 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         try{
             const res = await API.post("/api/auth/login", { email, password });
-            // Backend returns user info in res.data
-            const userData  = {
-                id: res.data.id,
-                email: res.data.email,
-                name: res.data.name,
-                role: res.data.role
-            };
+            // Backend returns user info and tokens in res.data
+            const userData  = res.data.user;
+            const accessToken = res.data.accessToken;
+
             setUser(userData);
             localStorage.setItem("user", JSON.stringify(userData));  
+            setAccessToken(accessToken);
             return res;
         } catch  (err) {
             alert(err.response?.data?.message || "Invalid email or password");
@@ -68,6 +66,7 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         setUser(null);
         localStorage.removeItem("user");
+        setAccessToken(null);
         console.log("Logged out successfully!");
         alert("Logged out successfully!");
     };
