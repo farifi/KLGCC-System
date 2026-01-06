@@ -1,33 +1,15 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const { getConnection } = require('../config/db.js');
 const oracledb = require('oracledb');
-
-// In a real app, store refresh tokens in DB or a dedicated store.
-const refreshTokens = new Map(); // key: refreshToken, value: { id, email, name, role }
-
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || "dev_access_secret";
-const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || "dev_refresh_secret";
-const ACCESS_TOKEN_EXPIRES_IN = "15m";
-const REFRESH_TOKEN_EXPIRES_IN = "7d";
-
-const signAccessToken = (user) => {
-    return jwt.sign(
-        { id: user.id, email: user.email, name: user.name, role: user.role },
-        ACCESS_TOKEN_SECRET,
-        { expiresIn: ACCESS_TOKEN_EXPIRES_IN }
-    );
-};
-
-const signRefreshToken = (user) => {
-    const token = jwt.sign(
-        { id: user.id, email: user.email, name: user.name, role: user.role },
-        REFRESH_TOKEN_SECRET,
-        { expiresIn: REFRESH_TOKEN_EXPIRES_IN }
-    );
-    refreshTokens.set(token, user);
-    return token;
-};
+const {
+    signAccessToken,
+    signRefreshToken,
+    verifyAccessToken,
+    verifyRefreshToken,
+    revokeRefreshToken,
+    hasRefreshToken,
+    getUserFromRefreshToken,
+} = require('../utils/jwt');
 
 exports.signup = async (req, res) => {
     const { full_name, email, phone_number, password } = req.body;
@@ -175,7 +157,7 @@ exports.login = async (req, res) => {
 exports.logout = (req, res) => {
     const token = req.cookies?.refreshToken;
     if (token) {
-        refreshTokens.delete(token);
+        revokeRefreshToken(token);
     }
     res.clearCookie("refreshToken");
     res.json({ message: "Logged out successfully" });
@@ -187,21 +169,21 @@ exports.refreshToken = (req, res) => {
         return res.status(401).json({ message: "No refresh token provided" });
     }
 
-    if (!refreshTokens.has(token)) {
+    if (!hasRefreshToken(token)) {
         return res.status(403).json({ message: "Invalid refresh token" });
     }
 
-    jwt.verify(token, REFRESH_TOKEN_SECRET, (err, decoded) => {
-        if (err) {
-            refreshTokens.delete(token);
-            return res.status(403).json({ message: "Invalid refresh token" });
-        }
+    try {
+        verifyRefreshToken(token);
+    } catch (err) {
+        revokeRefreshToken(token);
+        return res.status(403).json({ message: "Invalid refresh token" });
+    }
 
-        const storedUser = refreshTokens.get(token);
-        const newAccessToken = signAccessToken(storedUser);
+    const storedUser = getUserFromRefreshToken(token);
+    const newAccessToken = signAccessToken(storedUser);
 
-        return res.json({ accessToken: newAccessToken, user: storedUser });
-    });
+    return res.json({ accessToken: newAccessToken, user: storedUser });
 };
 
 exports.protected = (req, res) => {
@@ -212,11 +194,8 @@ exports.protected = (req, res) => {
         return res.status(401).json({ message: "Unauthorized" });
     }
 
-    jwt.verify(token, ACCESS_TOKEN_SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(401).json({ message: "Invalid or expired token" });
-        }
-
+    try {
+        const decoded = verifyAccessToken(token);
         return res.json({
             message: "Protected data",
             user: {
@@ -226,5 +205,7 @@ exports.protected = (req, res) => {
                 role: decoded.role
             }
         });
-    });
+    } catch (err) {
+        return res.status(401).json({ message: "Invalid or expired token" });
+    }
 };
