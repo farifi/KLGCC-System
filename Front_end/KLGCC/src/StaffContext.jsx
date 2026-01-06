@@ -17,7 +17,7 @@ export const StaffProvider = ({ children }) => {
 
     const deleteStaff = async (staff_id) => {
         try {
-            const res = await API.delete(`/api/staff/deleteStaff/${staff_id}`);
+            const res = await API.delete(`/api/staff/${staff_id}`);
             setStaffList( prev => prev.filter(
                 staff => staff.STAFF_ID !== staff_id 
             ));
@@ -29,9 +29,9 @@ export const StaffProvider = ({ children }) => {
 
     const updateStaff = async (staff) => {
         try {
-            await API.put(`/api/staff/updateStaff/${staff.STAFF_ID}`, staff);
+            await API.put(`/api/staff/${staff.STAFF_ID}`, staff);
             setStaffList(prev =>
-            prev.map(s => s.STAFF_ID === staff.STAFF_ID ? staff : s)
+                prev.map(s => s.STAFF_ID === staff.STAFF_ID ? staff : s)
             );
         } catch (err) {
             alert("Failed to update staff");

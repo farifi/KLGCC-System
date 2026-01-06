@@ -86,10 +86,10 @@ tr:not(:last-child) {
 
 /* Delete button variant */
 .table-actions button.delete {
-  background: rgba(255, 0, 0, 0.15); /* soft red glass */
+  background: rgba(109, 22, 22, 0.488); /* soft red glass */
   color: #fff;
 }
 
 .table-actions button.delete:hover {
-  background: rgba(255, 0, 0, 0.25); /* slightly stronger red on hover */
+  background: rgb(197, 10, 10); /* slightly stronger red on hover */
 }

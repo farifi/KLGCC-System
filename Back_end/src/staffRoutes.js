@@ -5,5 +5,7 @@ const { authenticateToken } = require('./middleware/auth');
 
 // All staff routes require JWT authentication
 router.get("/staffList", authenticateToken, staffController.staffList);
+router.delete("/:id", authenticateToken, staffController.deleteStaff);
+router.put("/:id", authenticateToken, staffController.updateStaff);
 
 module.exports = router;

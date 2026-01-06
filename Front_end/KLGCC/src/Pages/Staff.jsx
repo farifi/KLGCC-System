@@ -6,9 +6,6 @@ import Header from "../Components/Header.jsx";
 import Table from "../Components/Table.jsx";
 import Modal from "../Components/Modal.jsx";
 import EditStaffForm from "../Components/Form/EditStaffForm.jsx";
-
-
-
 import "./Pages CSS files/DefaultTheme.css";
 
 const Staff = () => {
