@@ -65,8 +65,10 @@ const Staff = () => {
                     <div className="default-content">
                         <h2>Employees List</h2>
                         <Table title="STAFF" columns={staffColumns} data={staffList}/>
+                        
                     </div>
                 </div>
+                
             </div>
             <Modal isOpen={isEditOpen} title="Edit Staff" onClose={() => setIsEditOpen(false)}>
                 <EditStaffForm
