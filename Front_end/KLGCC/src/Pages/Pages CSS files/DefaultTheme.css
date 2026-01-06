@@ -92,7 +92,7 @@
   overflow-y: overlay; /* Allows scrollbar to sit on top of content (Webkit only) */
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
   padding-right: 8px; /* Space for scrollbar */
   padding-bottom: 24px; /* Bottom spacing */
   
@@ -126,17 +126,30 @@
   background: transparent;
 }
 
-/* Dashboard charts layout */
+/* Dashboard layout similar to reference image */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 2fr 1.6fr;
-  grid-auto-rows: minmax(260px, auto);
-  gap: 24px;
+  grid-template-columns: 1.3fr 1.3fr 1fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "top1 top2 top3"
+    "main main side1"
+    "main main side2"
+    "txn txn txn";
+  gap: 16px;
 }
 
 @media (max-width: 1024px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "top1"
+      "top2"
+      "top3"
+      "main"
+      "side1"
+      "side2"
+      "txn";
   }
 }
 
@@ -144,10 +157,10 @@
   height: 100%;
 }
 
-.dashboard-card--wide {
-  grid-column: span 2;
-}
-
-.dashboard-card--small {
-  /* let these be a bit shorter if needed */
-}
+.dashboard-card--top1 { grid-area: top1; }
+.dashboard-card--top2 { grid-area: top2; }
+.dashboard-card--top3 { grid-area: top3; }
+.dashboard-card--main { grid-area: main; }
+.dashboard-card--side1 { grid-area: side1; }
+.dashboard-card--side2 { grid-area: side2; }
+.dashboard-card--txn { grid-area: txn; }

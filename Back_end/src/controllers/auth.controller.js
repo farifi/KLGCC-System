@@ -186,26 +186,11 @@ exports.refreshToken = (req, res) => {
     return res.json({ accessToken: newAccessToken, user: storedUser });
 };
 
+// This endpoint now uses the authenticateToken middleware
+// The middleware attaches req.user, so we can just return it
 exports.protected = (req, res) => {
-    const authHeader = req.headers.authorization || "";
-    const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
-
-    if (!token) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
-
-    try {
-        const decoded = verifyAccessToken(token);
-        return res.json({
-            message: "Protected data",
-            user: {
-                id: decoded.id,
-                email: decoded.email,
-                name: decoded.name,
-                role: decoded.role
-            }
-        });
-    } catch (err) {
-        return res.status(401).json({ message: "Invalid or expired token" });
-    }
+    return res.json({
+        message: "Protected data",
+        user: req.user // User info attached by authenticateToken middleware
+    });
 };
