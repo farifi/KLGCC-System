@@ -3,14 +3,7 @@ import Sidebar from "../Components/Sidebar.jsx";
 import Header from "../Components/Header.jsx";
 import StatsCards from "../Components/statsCards.jsx";
 import KPIChart from "../Components/KPIChart.jsx";
-import EmployeeTable from "../Components/EmployeeTable.jsx";
 import "./Pages CSS files/Dashboard.css";
-
-const employees = [
-  { id: "OM124894", name: "Judy Abbott", role: "Manager", performance: 70 },
-  { id: "OM124875", name: "Martin Feeney", role: "Specialist", performance: 55 },
-  { id: "OM124873", name: "Ellen Streich", role: "Supervisor", performance: 80 },
-];
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -31,7 +24,6 @@ const Dashboard = () => {
           <div className="dashboard-content">
             <StatsCards />
             <KPIChart />
-            <EmployeeTable employees={employees} />
           </div>
         </div>
       </div>
