@@ -13,7 +13,7 @@ const PieChartComp = ({ data, nameKey, valueKey, title }) => (
           nameKey={nameKey}
           dataKey={valueKey}
           label
-        >
+>
           {data.map((_, index) => (
             <Cell key={index} fill={COLORS[index % COLORS.length]} />
           ))}
