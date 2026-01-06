@@ -55,10 +55,41 @@ tr:not(:last-child) {
 
 .table-actions {
   display: flex;
-  gap: 8px;
+  gap: 10px; /* spacing between buttons */
 }
 
 .table-actions button {
+  padding: 6px 14px;
   border: none;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1); /* default frosted glass */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.table-actions button:hover {
+  background: rgba(255, 255, 255, 0.2); /* hover frosted */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.table-actions button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Delete button variant */
+.table-actions button.delete {
+  background: rgba(255, 0, 0, 0.15); /* soft red glass */
+  color: #fff;
+}
+
+.table-actions button.delete:hover {
+  background: rgba(255, 0, 0, 0.25); /* slightly stronger red on hover */
 }

@@ -37,7 +37,7 @@ const Staff = () => {
             render: (row) => (
                 <div className="table-actions">
                     <button onClick={() => handleEdit(row)}>✏️</button>
-                    <button onClick={() => handleDelete(row.STAFF_ID)}>🗑</button>
+                    <button className="delete" onClick={() => handleDelete(row.STAFF_ID)}>🗑</button>
                 </div>
             )
         }
@@ -63,8 +63,7 @@ const Staff = () => {
                 <div className="default-main">
                     <Header toggleSidebar={toggleSidebar} />
                     <div className="default-content">
-                        <h2>Employees List</h2>
-                        <Table title="STAFF" columns={staffColumns} data={staffList}/>
+                        <Table title="Staff List" columns={staffColumns} data={staffList}/>
                         
                     </div>
                 </div>
