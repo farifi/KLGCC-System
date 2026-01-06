@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import Sidebar from "../Components/Sidebar.jsx";
 import Header from "../Components/Header.jsx";
-import EmployeeTable from "../Components/EmployeeTable.jsx";
+import Table from "../Components/Table.jsx";
 import { useStaff } from "../apiContext.jsx";
 
-const Employee = () => {
+const Staff = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
     const closeSidebar = () => setIsSidebarOpen(false);
@@ -13,6 +13,32 @@ const Employee = () => {
     useEffect(() => {
         fetchStaffList();
     }, []);
+
+    const staffColumns = [
+        { header: "ID", key: "STAFF_ID" },
+        { header: "Name", key: "FULL_NAME" },
+        { header: "Email", key: "EMAIL" },
+        { header: "Phone No", key: "PHONE" },
+        { 
+            header: "Actions",
+            key: "actions",
+            render: (row) => (
+                <div className="table-actions">
+                    <button onClick={() => handleEdit(row)}>✏️</button>
+                    <button onClick={() => handleDelete(row.STAFF_ID)}>🗑</button>
+                </div>
+      )
+    }
+    ];
+
+    const handleEdit = (staff) => {
+        console.log("Edit staff: ", staff);
+    }
+
+    const handleDelete = (id) => {
+        if (!confirm("Are you sure you want to delete this staff?")) return;
+        deleteStaff(id);
+    }
 
     return (
         <div className="dashboard-page">
@@ -25,7 +51,7 @@ const Employee = () => {
                     <Header toggleSidebar={toggleSidebar} />
                     <div className="dashboard-main">
                         <h2>Employees List</h2>
-                        <EmployeeTable staffs={staffList}/>
+                        <Table title="STAFF" columns={staffColumns} data={staffList}/>
                     </div>
                 </div>
             </div>
@@ -33,4 +59,4 @@ const Employee = () => {
     );
 };
 
-export default Employee;
+export default Staff;

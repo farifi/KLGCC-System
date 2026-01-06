@@ -52,3 +52,13 @@ tr:not(:last-child) {
   background: linear-gradient(90deg, #f2994a, #f2c94c);
   border-radius: 6px;
 }
+
+.table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.table-actions button {
+  border: none;
+  cursor: pointer;
+}
