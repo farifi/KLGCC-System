@@ -3,7 +3,7 @@ import Sidebar from "../Components/Sidebar.jsx";
 import Header from "../Components/Header.jsx";
 import StatsCards from "../Components/statsCards.jsx";
 import KPIChart from "../Components/KPIChart.jsx";
-import "./Pages CSS files/Dashboard.css";
+import "./Pages CSS files/DefaultTheme.css";
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -12,16 +12,16 @@ const Dashboard = () => {
   const closeSidebar = () => setIsSidebarOpen(false);
 
   return (
-    <div className="dashboard-page">
-      <div className="dashboard">
+    <div className="default-page">
+      <div className="default">
         <div className={`sidebar-overlay ${isSidebarOpen ? "open" : ""}`} onClick={closeSidebar}></div>
         <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
            <Sidebar closeSidebar={closeSidebar} />
         </div>
         
-        <div className="dashboard-main">
+        <div className="default-main">
           <Header toggleSidebar={toggleSidebar} />
-          <div className="dashboard-content">
+          <div className="default-content">
             <StatsCards />
             <KPIChart />
           </div>

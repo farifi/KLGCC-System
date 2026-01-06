@@ -1,4 +1,4 @@
-.dashboard-page {
+.default-page {
   height: 100vh;
   padding: 24px;
   overflow: hidden;
@@ -11,7 +11,7 @@
   );
 }
 
-.dashboard {
+.default {
   height: 100%; /* take full height of .app */
   display: grid;
   grid-template-columns: 260px 1fr;
@@ -40,11 +40,11 @@
 }
 
 @media (max-width: 1024px) {
-  .dashboard-page {
+  .default-page {
     padding: 16px;
   }
 
-  .dashboard {
+  .default {
     grid-template-columns: 1fr;
     gap: 16px;
   }
@@ -77,7 +77,7 @@
 }
 
 /* THIS is the container for Header + Content */
-.dashboard-main {
+.default-main {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -87,7 +87,7 @@
 }
 
 /* Scrollable content area */
-.dashboard-content {
+.default-content {
   flex: 1;
   overflow-y: overlay; /* Allows scrollbar to sit on top of content (Webkit only) */
   display: flex;
@@ -102,26 +102,26 @@
 }
 
 /* Show scrollbar on hover */
-.dashboard-content:hover {
+.default-content:hover {
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
 
 /* Webkit Scrollbar Styling (Chrome, Edge, Safari) */
-.dashboard-content::-webkit-scrollbar {
+.default-content::-webkit-scrollbar {
   width: 6px;
   background: transparent;
 }
 
-.dashboard-content::-webkit-scrollbar-thumb {
+.default-content::-webkit-scrollbar-thumb {
   background: transparent; /* Hidden by default */
   border-radius: 999px;
   transition: background 0.3s ease;
 }
 
-.dashboard-content:hover::-webkit-scrollbar-thumb {
+.default-content:hover::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.2); /* Visible on hover */
 }
 
-.dashboard-content::-webkit-scrollbar-track {
+.default-content::-webkit-scrollbar-track {
   background: transparent;
 }

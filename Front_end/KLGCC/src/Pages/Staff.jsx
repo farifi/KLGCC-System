@@ -3,6 +3,7 @@ import Sidebar from "../Components/Sidebar.jsx";
 import Header from "../Components/Header.jsx";
 import Table from "../Components/Table.jsx";
 import { useStaff } from "../apiContext.jsx";
+import "./Pages CSS files/DefaultTheme.css";
 
 const Staff = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -41,15 +42,15 @@ const Staff = () => {
     }
 
     return (
-        <div className="dashboard-page">
-            <div className="dashboard">
+        <div className="default-page">
+            <div className="default">
                 <div className={`sidebar-overlay ${isSidebarOpen ? "open" : ""}`} onClick={closeSidebar}></div>
                 <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
                     <Sidebar closeSidebar={closeSidebar} />
                 </div>
-                <div className="dashboard-main">
+                <div className="default-main">
                     <Header toggleSidebar={toggleSidebar} />
-                    <div className="dashboard-main">
+                    <div className="default-content">
                         <h2>Employees List</h2>
                         <Table title="STAFF" columns={staffColumns} data={staffList}/>
                     </div>
