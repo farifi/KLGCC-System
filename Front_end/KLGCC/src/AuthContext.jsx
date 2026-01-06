@@ -1,4 +1,4 @@
-import {createContext, useContext, useState } from "react";
+import {createContext, useContext, useState, useEffect } from "react";
 import API from "./Api.jsx";
 
 const AuthContext = createContext();
@@ -9,6 +9,30 @@ export const AuthProvider = ({ children }) => {
         const saved = localStorage.getItem("user");
         return saved ? JSON.parse(saved) : null;
     });
+    const [authLoading, setAuthLoading] = useState(true);
+
+    // On initial load, ask backend if there is a valid session
+    useEffect(() => {
+        const checkSession = async () => {
+            try {
+                const res = await API.get("/api/auth/protected");
+                if (res.data?.user) {
+                    setUser(res.data.user);
+                    localStorage.setItem("user", JSON.stringify(res.data.user));
+                } else {
+                    setUser(null);
+                    localStorage.removeItem("user");
+                }
+            } catch {
+                setUser(null);
+                localStorage.removeItem("user");
+            } finally {
+                setAuthLoading(false);
+            }
+        };
+
+        checkSession();
+    }, []);
 
     const register = async (full_name, email, phone_number, password) => {
         try {
@@ -25,7 +49,13 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         try{
             const res = await API.post("/api/auth/login", { email, password });
-            const userData  = { email: res.data.email, customerId: res.data.customerId };
+            // Backend returns user info in res.data
+            const userData  = {
+                id: res.data.id,
+                email: res.data.email,
+                name: res.data.name,
+                role: res.data.role
+            };
             setUser(userData);
             localStorage.setItem("user", JSON.stringify(userData));  
             return res;
@@ -43,7 +73,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, register, login, logout }}>
+        <AuthContext.Provider value={{ user, authLoading, register, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

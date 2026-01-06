@@ -2,7 +2,12 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "./AuthContext"; // adjust path if needed
 
 const ProtectedRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { user, authLoading } = useAuth();
+
+  // Optionally you can render a loader here while we check the session
+  if (authLoading) {
+    return null;
+  }
 
   if (!user) {
     return <Navigate to="/LandingPage" replace />;
