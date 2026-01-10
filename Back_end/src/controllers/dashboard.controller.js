@@ -1,36 +1,30 @@
 const { getConnection } = require('../config/db.js');
 const oracledb = require('oracledb');
 
+exports.bookingTrend = async (req, res) => {
 
-exports.dashboard = async (req, res) => {
-    // let conn;
+};
 
-    // try {
-    //     conn = await getConnection();
+exports.bookingsByCourse = async (req, res) => {
+    
+};
 
-    //     const dashboardData = await conn.execute(
-    //         ``, [],
-    //         { outFormat: oracledb.OUT_FORMAT_OBJECT }
-    //     );
+exports.equipmentUsage = async (req, res) => {
+    
+};
 
-    //     if (staffList.rows.length === 0 ){
-    //         return res.status(200).json({ message: "No record currently in the database"});
-    //     }
+exports.customerTypes = async (req, res) => {
+    
+};
 
-    //     res.status(201).json({ staffs: dashboardData.rows });
+exports.staffByPosition = async (req, res) => {
+    
+};
 
-    // } catch (err) {
-    //     console.error('Signup error:', err);
-    //     if (!res.headerSent) {
-    //         res.status(500).json({ message: "Server error", error: err.message });
-    //     }
-    // } finally {
-    //     if (conn) {
-    //         try {
-    //             await conn.close(); 
-    //         } catch (err) {
-    //              console.error(err);
-    //         }
-    //     } 
-    // }
+exports.topCourses = async (req, res) => {
+    
+};
+
+exports.transactions = async (req, res) => {
+    
 };
