@@ -4,6 +4,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const authRoutes = require("./auth");
 const staffRoutes = require("./staffRoutes");
+const dashboardRoutes = require("./dashboardRoutes");
 
 const app = express();
 
@@ -25,5 +26,6 @@ app.use(session({
 
 app.use("/api/auth", authRoutes);
 app.use("/api/staff", staffRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 module.exports = app;
