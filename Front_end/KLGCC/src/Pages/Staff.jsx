@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useStaff } from "../StaffContext.jsx";
+import { useStaff } from "../API Contexts Folder/StaffContext.jsx";
 
 import Sidebar from "../Components/Sidebar.jsx";
 import Header from "../Components/Header.jsx";

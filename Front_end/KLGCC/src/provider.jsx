@@ -1,4 +1,4 @@
-import { AuthProvider } from "./AuthContext";
+import { AuthProvider } from "./API Contexts Folder/AuthContext";
 import { StaffProvider } from "./StaffContext";
 
 const Providers = ({ children }) => {

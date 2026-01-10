@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../API Contexts Folder/AuthContext';
 import { useNavigate } from "react-router-dom"; 
 import { Link } from "react-router-dom";
 import bgImage from '../assets/golfBG.jpg';
