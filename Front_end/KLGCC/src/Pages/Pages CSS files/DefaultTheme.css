@@ -153,12 +153,58 @@
       "side2"
       "txn";
   }
+  .chart-container {
+    aspect-ratio: auto; /* let it shrink naturally */
+    min-height: 200px;
+  }
 }
 
 .dashboard-card {
   min-height: 0;
   display: flex;
   flex-direction: column;
+}
+
+.chart-container {
+  flex: 1; /* fill the card */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.chart-wrapper {
+  width: 100%;
+  /* Maintain aspect ratio so chart height adapts */
+  aspect-ratio: 4 / 3;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-wrapper svg {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-description {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #555;
+  text-align: center;
+}
+
+.chart-container svg {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-description {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #555;
+  text-align: center;
 }
 
 .dashboard-card--top1 { grid-area: top1; }

@@ -1,14 +1,14 @@
 import { AuthProvider } from "./API Contexts Folder/AuthContext";
 import { StaffProvider } from "./API Contexts Folder/StaffContext";
-// import { DashboardProvider } from "./API Contexts Folder/DashboardContext";
+import { DashboardProvider } from "./API Contexts Folder/DashboardContext";
 
 const Providers = ({ children }) => {
   return (
     <AuthProvider>
       <StaffProvider>
-        {/* <DashboardProvider> */}
+        <DashboardProvider>
           {children}
-        {/* </DashboardProvider> */}
+        </DashboardProvider> 
       </StaffProvider>
     </AuthProvider>
   );
