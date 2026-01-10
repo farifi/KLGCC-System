@@ -77,21 +77,25 @@ const Dashboard = () => {
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const closeSidebar = () => setIsSidebarOpen(false);
 
-const { dashboardData = {}, loading } = useDashboard() || {};
+  const { dashboardData = {}, loading } = useDashboard() || {};
 
-const {
-  bookingTrendData = [],
-  bookingsByCourse = [],
-  equipmentUsage = [],
-  customerTypes = [],
-  staffByPosition = [],
-  multiLineChartData = [],
-  transactions = [],
-} = dashboardData;
+  const {
+    bookingTrendData = [],
+    bookingsByCourse = [],
+    equipmentUsage = [],
+    customerTypes = [],
+    staffByPosition = [],
+    multiLineChartData = [],
+    transactions = [],
+  } = dashboardData;
 
-const H1Bookings = useMemo(() => bookingTrendData.slice(0, 6), [bookingTrendData]);
+  const H1Bookings = useMemo(
+    () => bookingTrendData.slice(0, 6),
+    [bookingTrendData]
+  );
 
-if (loading) return <p>Loading dashboard...</p>;
+
+  if (loading) return <p>Loading dashboard...</p>;
 
 
   return (

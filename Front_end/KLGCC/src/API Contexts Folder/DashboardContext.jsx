@@ -7,7 +7,7 @@ export const DashboardProvider = ({ children }) => {
     const [dashboardData, setDashboardData] = useState({
         bookingTrend: [],
         bookingByCourse: [],
-        equimentUsage: [],
+        equipmentUsage: [],
         customerType: [],
         staffByPosition: [],
         multiLineBookings: [],
@@ -19,8 +19,33 @@ export const DashboardProvider = ({ children }) => {
     useEffect(() => {
         const fetchDashboardData = async () => { 
             try {
-                const res = await API.get("/api/dashboard");
-                setDashboardData(res.data);
+                const [
+                    bookingTrend,
+                    bookingsByCourse,
+                    equipmentUsage,
+                    customerTypes,
+                    staffByPosition,
+                    topCourses,
+                    transactions
+                ] = await Promise.all([
+                    API.get("/api/dashboard/booking-trend"),
+                    API.get("/api/dashboard/bookings-by-course"),
+                    API.get("/api/dashboard/equipment-usage"),
+                    API.get("/api/dashboard/customer-types"),
+                    API.get("/api/dashboard/staff-by-position"),
+                    API.get("/api/dashboard/top-courses"),
+                    API.get("/api/dashboard/transactions")
+                ]);
+                setDashboardData({
+                    bookingTrendData: bookingTrend.data,
+                    bookingsByCourse: bookingsByCourse.data,
+                    equipmentUsage: equipmentUsage.data,
+                    customerTypes: customerTypes.data,
+                    staffByPosition: staffByPosition.data,
+                    multiLineChartData: topCourses.data,
+                    transactions: transactions.data
+                });
+
             } catch (error) {
                 console.error("Dashboard API error", err);
             } finally {
