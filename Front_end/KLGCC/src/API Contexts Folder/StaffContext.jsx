@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import API from "./Api.jsx";
+import API from "../Api.jsx";
 
 const StaffContext = createContext();
 
