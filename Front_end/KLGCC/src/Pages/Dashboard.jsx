@@ -9,93 +9,89 @@ import GlassCard from "../Components/GlassCard.jsx";
 import TopCoursesLineChart from "../Components/Charts/TopCourseLineChart.jsx"
 import TransactionsList from "../Components/TransactionsList.jsx"
 import "./Pages CSS files/DefaultTheme.css";
-// import { useDashboard } from "../API Contexts Folder/DashboardContext.jsx";
+import { useDashboard } from "../API Contexts Folder/DashboardContext.jsx";
 
 // Mock data inspired by ERD (Bookings, Courses, Equipment, Customers, Staff)
-const bookingTrendData = [
-  { month: "Jan", bookings: 30, revenue: 12 },
-  { month: "Feb", bookings: 42, revenue: 15 },
-  { month: "Mar", bookings: 55, revenue: 18 },
-  { month: "Apr", bookings: 48, revenue: 16 },
-  { month: "May", bookings: 63, revenue: 21 },
-  { month: "Jun", bookings: 70, revenue: 25 },
-  { month: "Jul", bookings: 68, revenue: 23 },
-  { month: "Aug", bookings: 74, revenue: 26 },
-  { month: "Sep", bookings: 60, revenue: 20 },
-  { month: "Oct", bookings: 65, revenue: 22 },
-  { month: "Nov", bookings: 58, revenue: 19 },
-  { month: "Dec", bookings: 72, revenue: 27 },
-];
+// const bookingTrendData = [
+//   { month: "Jan", bookings: 30, revenue: 12 },
+//   { month: "Feb", bookings: 42, revenue: 15 },
+//   { month: "Mar", bookings: 55, revenue: 18 },
+//   { month: "Apr", bookings: 48, revenue: 16 },
+//   { month: "May", bookings: 63, revenue: 21 },
+//   { month: "Jun", bookings: 70, revenue: 25 },
+//   { month: "Jul", bookings: 68, revenue: 23 },
+//   { month: "Aug", bookings: 74, revenue: 26 },
+//   { month: "Sep", bookings: 60, revenue: 20 },
+//   { month: "Oct", bookings: 65, revenue: 22 },
+//   { month: "Nov", bookings: 58, revenue: 19 },
+//   { month: "Dec", bookings: 72, revenue: 27 },
+// ];
 
-const bookingsByCourse = [
-  { course: "East Course", count: 120 },
-  { course: "West Course", count: 95 },
-  { course: "Championship", count: 60 },
-];
+// const bookingsByCourse = [
+//   { course: "East Course", count: 120 },
+//   { course: "West Course", count: 95 },
+//   { course: "Championship", count: 60 },
+// ];
 
-const equipmentUsage = [
-  { type: "Cart", rentals: 180 },
-  { type: "Clubs", rentals: 75 },
-  { type: "Trolleys", rentals: 110 },
-];
+// const equipmentUsage = [
+//   { type: "Cart", rentals: 180 },
+//   { type: "Clubs", rentals: 75 },
+//   { type: "Trolleys", rentals: 110 },
+// ];
 
-const customerTypes = [
-  { segment: "Member", value: 65 },
-  { segment: "Walk-in", value: 35 },
-];
+// const customerTypes = [
+//   { segment: "Member", value: 65 },
+//   { segment: "Walk-in", value: 35 },
+// ];
 
-const staffByPositionMock = [
-  { position: "Front Desk", count: 6 },
-  { position: "Caddie", count: 24 },
-  { position: "Operations", count: 10 },
-  { position: "Management", count: 4 },
-];
+// const staffByPositionMock = [
+//   { position: "Front Desk", count: 6 },
+//   { position: "Caddie", count: 24 },
+//   { position: "Operations", count: 10 },
+//   { position: "Management", count: 4 },
+// ];
 
-const multiLineChartData = [
-  { month: "Jan", courseA: 30, courseB: 20, courseC: 25 },
-  { month: "Feb", courseA: 42, courseB: 28, courseC: 30 },
-  { month: "Mar", courseA: 55, courseB: 36, courseC: 38 },
-  { month: "Apr", courseA: 48, courseB: 32, courseC: 34 },
-  { month: "May", courseA: 63, courseB: 40, courseC: 41 },
-  { month: "Jun", courseA: 70, courseB: 45, courseC: 47 },
-  { month: "Jul", courseA: 68, courseB: 43, courseC: 46 },
-  { month: "Aug", courseA: 74, courseB: 48, courseC: 52 },
-  { month: "Sep", courseA: 60, courseB: 39, courseC: 42 },
-  { month: "Oct", courseA: 65, courseB: 41, courseC: 44 },
-  { month: "Nov", courseA: 58, courseB: 37, courseC: 40 },
-  { month: "Dec", courseA: 72, courseB: 50, courseC: 55 },
-];
+// const multiLineChartData = [
+//   { month: "Jan", courseA: 30, courseB: 20, courseC: 25 },
+//   { month: "Feb", courseA: 42, courseB: 28, courseC: 30 },
+//   { month: "Mar", courseA: 55, courseB: 36, courseC: 38 },
+//   { month: "Apr", courseA: 48, courseB: 32, courseC: 34 },
+//   { month: "May", courseA: 63, courseB: 40, courseC: 41 },
+//   { month: "Jun", courseA: 70, courseB: 45, courseC: 47 },
+//   { month: "Jul", courseA: 68, courseB: 43, courseC: 46 },
+//   { month: "Aug", courseA: 74, courseB: 48, courseC: 52 },
+//   { month: "Sep", courseA: 60, courseB: 39, courseC: 42 },
+//   { month: "Oct", courseA: 65, courseB: 41, courseC: 44 },
+//   { month: "Nov", courseA: 58, courseB: 37, courseC: 40 },
+//   { month: "Dec", courseA: 72, courseB: 50, courseC: 55 },
+// ];
 
-const transactionsMock = [
-  { id: "BK-1201", type: "Booking (Member)", amount: 4323, date: "12 Dec 2023", status: "Done" },
-  { id: "BK-1202", type: "Booking (Walk-in)", amount: 2890, date: "12 Dec 2023", status: "Pending" },
-  { id: "EQ-2245", type: "Equipment Rental", amount: 640, date: "11 Dec 2023", status: "Done" },
-];
+// const transactionsMock = [
+//   { id: "BK-1201", type: "Booking (Member)", amount: 4323, date: "12 Dec 2023", status: "Done" },
+//   { id: "BK-1202", type: "Booking (Walk-in)", amount: 2890, date: "12 Dec 2023", status: "Pending" },
+//   { id: "EQ-2245", type: "Equipment Rental", amount: 640, date: "11 Dec 2023", status: "Done" },
+// ];
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const closeSidebar = () => setIsSidebarOpen(false);
 
-  // const {
-  // DashboardData: {
-  //   bookingTrendData,
-  //   bookingsByCourse,
-  //   equipmentUsage,
-  //   customerTypes,
-  //   staffByPosition,
-  //   multiLineChartData,
-  //   transactions,
-  //   },
-  //   Loading,
-  // } = useDashboard();
+const { dashboardData = {}, loading } = useDashboard() || {};
 
-  const H1Bookings = useMemo(
-    () => bookingTrendData.slice(0, 6),
-    [bookingTrendData]
-  );
+const {
+  bookingTrendData = [],
+  bookingsByCourse = [],
+  equipmentUsage = [],
+  customerTypes = [],
+  staffByPosition = [],
+  multiLineChartData = [],
+  transactions = [],
+} = dashboardData;
 
-  // if (Loading) return <p>Loading dashboard...</p>
+const H1Bookings = useMemo(() => bookingTrendData.slice(0, 6), [bookingTrendData]);
+
+if (loading) return <p>Loading dashboard...</p>;
 
 
   return (
@@ -172,7 +168,7 @@ const Dashboard = () => {
               <GlassCard className="dashboard-card dashboard-card--side2" style={{ minHeight: 260 }}>
                 <div style={{ width: "100%", height: "100%" }}>
                   <BarChartComp
-                    data={staffByPositionMock}
+                    data={staffByPosition}
                     xKey="position"
                     yKey="count"
                     title="Staff by Position"
@@ -191,7 +187,7 @@ const Dashboard = () => {
                   <span>Date</span>
                   <span>Status</span>
                 </div>
-                <TransactionsList data={transactionsMock} />
+                <TransactionsList data={transactions} />
               </GlassCard>
             </div>
           </div>
