@@ -64,6 +64,8 @@
     transition: left 0.3s ease;
     border-right: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 16px 16px 16px 16px;
+    overflow-x: visible;
+    overflow-y: auto;
   }
 
   .sidebar-wrapper.open {
@@ -129,7 +131,7 @@
 /* Dashboard layout similar to reference image */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1.3fr 1.3fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   grid-template-rows: auto auto auto;
   grid-template-areas:
     "top1 top2 top3"
@@ -154,7 +156,9 @@
 }
 
 .dashboard-card {
-  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .dashboard-card--top1 { grid-area: top1; }

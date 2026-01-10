@@ -1,22 +1,15 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Sidebar from "../Components/Sidebar.jsx";
 import Header from "../Components/Header.jsx";
 import StatsCards from "../Components/statsCards.jsx";
-import KPIChart from "../Components/KPIChart.jsx";
 import LineChartComp from "../Components/Charts/LineCharts.jsx";
 import BarChartComp from "../Components/Charts/BarChart.jsx";
 import PieChartComp from "../Components/Charts/PieChart.jsx";
 import GlassCard from "../Components/GlassCard.jsx";
-import {
-  LineChart as ReLineChart,
-  Line as ReLine,
-  XAxis as ReXAxis,
-  YAxis as ReYAxis,
-  Tooltip as ReTooltip,
-  ResponsiveContainer as ReResponsiveContainer,
-  Legend as ReLegend,
-} from "recharts";
+import TopCoursesLineChart from "../Components/Charts/TopCourseLineChart.jsx"
+import TransactionsList from "../Components/TransactionsList.jsx"
 import "./Pages CSS files/DefaultTheme.css";
+// import { useDashboard } from "../API Contexts Folder/DashboardContext.jsx";
 
 // Mock data inspired by ERD (Bookings, Courses, Equipment, Customers, Staff)
 const bookingTrendData = [
@@ -81,9 +74,29 @@ const transactionsMock = [
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const closeSidebar = () => setIsSidebarOpen(false);
+
+  // const {
+  // DashboardData: {
+  //   bookingTrendData,
+  //   bookingsByCourse,
+  //   equipmentUsage,
+  //   customerTypes,
+  //   staffByPosition,
+  //   multiLineChartData,
+  //   transactions,
+  //   },
+  //   Loading,
+  // } = useDashboard();
+
+  const H1Bookings = useMemo(
+    () => bookingTrendData.slice(0, 6),
+    [bookingTrendData]
+  );
+
+  // if (Loading) return <p>Loading dashboard...</p>
+
 
   return (
     <div className="default-page">
@@ -98,90 +111,87 @@ const Dashboard = () => {
           <div className="default-content">
             <StatsCards />
 
-            <div className="dashboard-grid">
-              <GlassCard className="dashboard-card dashboard-card--top1">
-                <LineChartComp
-                  data={bookingTrendData.slice(0, 6)}
-                  xKey="month"
-                  yKey="bookings"
-                  title="Bookings (H1)"
-                />
+            <div className="dashboard-grid" style={{ minWidth: 0 }}>
+              <GlassCard className="dashboard-card dashboard-card--top1" style={{ minHeight: 260 }}>
+                <div style={{ width: "100%", height: "100%" }}>
+                  <LineChartComp
+                    data={H1Bookings}
+                    xKey="month"
+                    yKey="bookings"
+                    title="Bookings (H1)"
+                  />
+                </div>
               </GlassCard>
 
-              <GlassCard className="dashboard-card dashboard-card--top2">
-                <BarChartComp
-                  data={bookingsByCourse}
-                  xKey="course"
-                  yKey="count"
-                  title="Bookings by Course"
-                  barColor="#2d9cdb"
-                />
+              <GlassCard className="dashboard-card dashboard-card--top2" style={{ minHeight: 260 }}>
+                <div style={{ width: "100%", height: "100%" }}>
+                  <BarChartComp
+                    data={bookingsByCourse}
+                    xKey="course"
+                    yKey="count"
+                    title="Bookings by Course"
+                    barColor="#2d9cdb"
+                  />
+                </div>
               </GlassCard>
 
-              <GlassCard className="dashboard-card dashboard-card--top3">
-                <PieChartComp
-                  data={equipmentUsage}
-                  nameKey="type"
-                  valueKey="rentals"
-                  title="Equipment Rentals"
-                />
+              {/* Equipment Rentals Pie Chart */}
+              <GlassCard className="dashboard-card dashboard-card--top3" style={{ minHeight: 260 }}>
+                <div style={{ width: "100%", height: "100%" }}>
+                  <PieChartComp
+                    data={equipmentUsage}
+                    nameKey="type"
+                    valueKey="rentals"
+                    title="Equipment Rentals"
+                  />
+                </div>
               </GlassCard>
 
-              <GlassCard className="dashboard-card dashboard-card--main">
+              {/* Top 3 Courses Multi-Line Chart */}
+              <GlassCard className="dashboard-card dashboard-card--main" style={{ minHeight: 300 }}>
                 <h3 style={{ marginBottom: 12 }}>Top 3 Courses (Monthly)</h3>
-                <ReResponsiveContainer width="100%" height={320}>
-                  <ReLineChart data={multiLineChartData}>
-                    <ReXAxis dataKey="month" stroke="#555555" tick={{ fill: "#555555", fontSize: 12 }} />
-                    <ReYAxis stroke="#555555" tick={{ fill: "#555555", fontSize: 12 }} />
-                    <ReTooltip />
-                    <ReLegend />
-                    <ReLine type="monotone" dataKey="courseA" stroke="#f5a623" strokeWidth={3} dot={false} name="Course A" />
-                    <ReLine type="monotone" dataKey="courseB" stroke="#2d9cdb" strokeWidth={3} dot={false} name="Course B" />
-                    <ReLine type="monotone" dataKey="courseC" stroke="#2ecc71" strokeWidth={3} dot={false} name="Course C" />
-                  </ReLineChart>
-                </ReResponsiveContainer>
+                <div style={{ width: "100%", height: 300 }}>
+                  <TopCoursesLineChart data={multiLineChartData} />
+                </div>
               </GlassCard>
 
-              <GlassCard className="dashboard-card dashboard-card--side1">
-                <PieChartComp
-                  data={customerTypes}
-                  nameKey="segment"
-                  valueKey="value"
-                  title="Customer Types"
-                  colors={["#2d9cdb", "#f5a623"]}
-                />
+              {/* Customer Types Pie Chart */}
+              <GlassCard className="dashboard-card dashboard-card--side1" style={{ minHeight: 260 }}>
+                <div style={{ width: "100%", height: "100%" }}>
+                  <PieChartComp
+                    data={customerTypes}
+                    nameKey="segment"
+                    valueKey="value"
+                    title="Customer Types"
+                    colors={["#2d9cdb", "#f5a623"]}
+                  />
+                </div>
               </GlassCard>
 
-              <GlassCard className="dashboard-card dashboard-card--side2">
-                <BarChartComp
-                  data={staffByPositionMock}
-                  xKey="position"
-                  yKey="count"
-                  title="Staff by Position"
-                  barColor="#2ecc71"
-                />
+              {/* Staff by Position Bar Chart */}
+              <GlassCard className="dashboard-card dashboard-card--side2" style={{ minHeight: 260 }}>
+                <div style={{ width: "100%", height: "100%" }}>
+                  <BarChartComp
+                    data={staffByPositionMock}
+                    xKey="position"
+                    yKey="count"
+                    title="Staff by Position"
+                    barColor="#2ecc71"
+                  />
+                </div>
               </GlassCard>
 
-              <GlassCard className="dashboard-card dashboard-card--txn">
+              {/* Transactions Table */}
+              <GlassCard className="dashboard-card dashboard-card--txn" style={{ minHeight: 200 }}>
                 <h3 style={{ marginBottom: 12 }}>Transactions</h3>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr 1fr 1fr 1fr", gap: "8px", fontWeight: 600, color: "#555" }}>
+                <div className="transactions-grid-header">
                   <span>ID</span>
                   <span>Type</span>
                   <span>Amount</span>
                   <span>Date</span>
                   <span>Status</span>
                 </div>
-                <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
-                  {transactionsMock.map((tx) => (
-                    <div key={tx.id} style={{ display: "grid", gridTemplateColumns: "1fr 2fr 1fr 1fr 1fr", gap: "8px", alignItems: "center", fontSize: 14 }}>
-                      <span>{tx.id}</span>
-                      <span>{tx.type}</span>
-                      <span>${tx.amount}</span>
-                      <span>{tx.date}</span>
-                      <span style={{ color: tx.status === "Done" ? "#2ecc71" : "#f5a623" }}>{tx.status}</span>
-                    </div>
-                  ))}
-                </div>
+                <TransactionsList data={transactionsMock} />
               </GlassCard>
             </div>
           </div>

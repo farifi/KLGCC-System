@@ -7,14 +7,61 @@
   flex-direction: column;
   justify-content: space-between; /* keep content spread without needing scroll */
   gap: 12px;
-  padding-right: 12px; /* Add some spacing if needed */
+  padding: 0;
   height: 100vh; /* exactly viewport height */
-  overflow: hidden; /* avoid ugly scroll bar on sidebar itself */
+  overflow-y: auto;
+  overflow-x: visible;
 }
 
-.logo-box {
+.sidebar .logo-box {
   margin-bottom: 24px;
-  /* Adjust logo styling if needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0 !important;
+  overflow: visible !important;
+  box-shadow: none !important;
+  background: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  height: auto !important;
+}
+
+.sidebar .logo-box img {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 80px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* Responsive logo sizing for small screens - sidebar-wrapper is 260px wide with 20px padding = 220px available */
+@media (max-width: 1024px) {
+  .sidebar {
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: visible;
+  }
+  
+  .sidebar .logo-box {
+    padding: 0 !important;
+    margin-bottom: 20px;
+    width: 100% !important;
+    overflow: visible !important;
+  }
+  
+  .sidebar .logo-box img {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 55px !important;
+    height: auto !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
 }
 
 .menu-section {

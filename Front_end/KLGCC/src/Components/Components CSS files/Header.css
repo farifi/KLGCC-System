@@ -41,12 +41,16 @@
 
 /* Profile glass card */
 .profile {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 8px;
 
-  padding: 10px 16px !important;
+  padding: 14px 18px !important;
   border-radius: 999px;
+  white-space: nowrap;
+  min-width: auto !important;
+  width: auto !important;
 }
 
 .profile img {
