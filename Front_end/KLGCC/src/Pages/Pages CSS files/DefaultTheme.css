@@ -171,21 +171,24 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 8px;
   width: 100%;
-}
+} 
 
 .chart-wrapper {
   width: 100%;
-  /* Maintain aspect ratio so chart height adapts */
-  aspect-ratio: 4 / 3;  
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex: 1; /* fill available vertical space inside the card */
+  min-height: 160px; /* ensure a sensible minimum */
+  position: relative;
+  overflow: hidden;
 }
 
 .chart-wrapper svg {
   width: 100% !important;
   height: 100% !important;
+  position: relative;
+  z-index: 0;
 }
 
 .chart-description {
@@ -193,11 +196,8 @@
   font-size: 0.9rem;
   color: #555;
   text-align: center;
-}
-
-.chart-container svg {
-  width: 100% !important;
-  height: 100% !important;
+  position: relative;
+  z-index: 1;
 }
 
 .chart-description {
