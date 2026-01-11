@@ -32,6 +32,6 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/staff", staffRoutes);
 app.use("/api/dashboard", dashboardRoutes);
-// app.use("/api/booking", bookingRoutes);
+app.use("/api/booking", bookingRoutes);
 
 module.exports = app;

@@ -4,21 +4,11 @@ const bookingController = require("./controllers/booking.controller");
 const { authenticateToken } = require("./middleware/auth");
 
 router.get("/bookingList", authenticateToken, bookingController.bookingList);
-router.post(
-  "/updateBooking/:id",
-  authenticateToken,
-  bookingController.bookingUpdate,
-);
-router.post(
-  "/confirmBooking/:id",
-  authenticateToken,
-  bookingController.confirmBooking,
-);
-router.post(
-  "/deleteBooking/:id",
-  authenticateToken,
-  bookingController.deleteBooking,
-);
+router.delete("/:id", authenticateToken, bookingController.deleteBooking);
 router.post("/addBooking", authenticateToken, bookingController.addBooking);
+
+router.put("/:id/bookingUpdate", authenticateToken, bookingController.bookingUpdate);
+router.put("/:id/confirmBooking", authenticateToken, bookingController.confirmBooking);
+router.put("/:id/cancelBooking", authenticateToken, bookingController.cancelBooking);
 
 module.exports = router;
