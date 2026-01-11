@@ -38,7 +38,8 @@ const Sidebar = () => {
         { label: "Dashboard", icon: LayoutDashboard },
         { label: "Staff", icon: ListTodo },
         { label: "Booking", icon: CalendarIcon },
-        { label: "Equipment", icon: Settings },
+        { label: "Customer", icon: Users },
+        { label: "Equipment", icon: Briefcase },
     ];
 
     const renderMenuItem = (item) => {

@@ -31,7 +31,7 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible; /* allow tooltips and overlays to show above card content */
 }
 
 /* Optional hover (nice but subtle) */
