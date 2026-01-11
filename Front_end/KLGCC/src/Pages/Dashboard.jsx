@@ -60,10 +60,8 @@ const Dashboard = () => {
                     valueKey="revenue"
                     title="Total Booking Revenue by Course (RM)"
                     colors={["#2d9cdb","#f5a623","#27ae60","#e74c3c","#8e44ad"]}
+                    description={"Shows each course's share of total booking revenue — useful to spot top revenue contributors and concentration."}
                   />
-                  <p className="chart-description">
-                    This chart shows how each course contributes to total booking revenue.
-                  </p>
                 </div>
               </GlassCard>
 
@@ -75,6 +73,7 @@ const Dashboard = () => {
                   xKey="month"
                   yKey="bookings"
                   title="Bookings Trend Over Time"
+                  description={"Displays bookings over time (by month) to spot trends, spikes, and seasonality."}
                 />
               </GlassCard>
 
@@ -87,6 +86,7 @@ const Dashboard = () => {
                   title="Equipment Usage Frequency"
                   barColor="#2ecc71"
                   isDecimal={false}
+                  description={"Shows how often each equipment type is rented; helps track demand and maintenance scheduling."}
                 />
               </GlassCard>
 
@@ -98,6 +98,7 @@ const Dashboard = () => {
                   yKey="price"
                   title="Average Booking Price per Staff (RM)"
                   barColor="#2d9cdb"
+                  description={"Average booking price per staff; useful to compare revenue handled across staff members."}
                 />
               </GlassCard>
 
@@ -109,6 +110,7 @@ const Dashboard = () => {
                   valueKey="count"
                   title="Booking Count by Course"
                   colors={["#2d9cdb","#f5a623","#27ae60","#e74c3c","#8e44ad"]}
+                  description={"Shows number of bookings per course to identify the most popular courses."}
                 />
               </GlassCard>
             </div>
