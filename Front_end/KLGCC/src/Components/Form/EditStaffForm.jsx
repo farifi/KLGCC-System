@@ -5,15 +5,19 @@ const EditStaffForm = ({ staff, onCancel, onSave }) => {
   const [formData, setFormData] = useState({
     FULL_NAME: "",
     EMAIL: "",
-    PHONE: ""
+    PHONE: "",
+    SUPERVISOR_ID: "",
+    SUPERVISOR_NAME: ""
   });
 
   useEffect(() => {
     if (staff) {
       setFormData({
-        FULL_NAME: staff.FULL_NAME || "",
+        FULL_NAME: staff.STAFF_NAME || "",
         EMAIL: staff.EMAIL || "",
-        PHONE: staff.PHONE || ""
+        PHONE: staff.PHONE || "",
+        SUPERVISOR_ID: staff.SUPERVISOR_ID || "",
+        SUPERVISOR_NAME: staff.SUPERVISOR_NAME || ""
       });
     }
   }, [staff]);
@@ -55,6 +59,24 @@ const EditStaffForm = ({ staff, onCancel, onSave }) => {
         <input
           name="PHONE"
           value={formData.PHONE}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <label>
+        Supervisor ID
+        <input
+          name="SUPERVISOR ID"
+          value={formData.SUPERVISOR_ID}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <label>
+        Supervisor Name
+        <input
+          name="SUPERVISOR NAME"
+          value={formData.SUPERVISOR_NAME}
           onChange={handleChange}
           required
         />
