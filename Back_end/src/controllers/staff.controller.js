@@ -1,7 +1,6 @@
 const { getConnection } = require('../config/db.js');
 const oracledb = require('oracledb');
 
-
 exports.staffList = async (req, res) => {
     let conn;
 
@@ -84,7 +83,7 @@ exports.deleteStaff = async (req, res) => {
 
 exports.updateStaff = async (req, res) => {
     const { id } = req.params; 
-    const { FULL_NAME, EMAIL, PHONE } = req.body;
+    const { FULL_NAME, EMAIL, PHONE, SUPERVISOR_ID, SUPERVISOR_NAME } = req.body;
     
     if (!id) return res.status(400).json({ message: 'Staff ID is required' });
 
@@ -92,10 +91,11 @@ exports.updateStaff = async (req, res) => {
     try {
         conn = await getConnection();
         const result = await conn.execute(
-            `UPDATE STAFF SET FULL_NAME = :name, EMAIL = :email, PHONE = :phone 
-             WHERE STAFF_ID = :id`, 
-             {name: FULL_NAME, email: EMAIL, phone: PHONE, id: id},
-             {autoCommit: true}
+            `UPDATE STAFF SET FULL_NAME = :name, EMAIL = :email, 
+            PHONE = :phone, SUPERVISOR_ID = :supervisorId, SUPERVISOR_NAME = :supervisorName 
+            WHERE STAFF_ID = :id`, 
+            {name: FULL_NAME, email: EMAIL, phone: PHONE, supervisorId: SUPERVISOR_ID, supervisorName: SUPERVISOR_NAME, id: id},
+            {autoCommit: true}
         );
 
         if (result.rowsAffected === 0) {
