@@ -25,9 +25,11 @@ const Staff = () => {
 
     const staffColumns = [
         { header: "ID", key: "STAFF_ID" },
-        { header: "Name", key: "FULL_NAME" },
+        { header: "Name", key: "STAFF_NAME" },
         { header: "Email", key: "EMAIL" },
         { header: "Phone No", key: "PHONE" },
+        { header: "Supervisor ID", key: "SUPERVISOR_ID" },
+        { header: "Supervisor Name", key: "SUPERVISOR_NAME" },
         { 
             header: "Actions",
             key: "actions",

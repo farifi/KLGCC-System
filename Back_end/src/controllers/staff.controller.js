@@ -9,7 +9,17 @@ exports.staffList = async (req, res) => {
         conn = await getConnection();
 
         const staffList = await conn.execute(
-            `SELECT STAFF_ID, FULL_NAME, EMAIL, PHONE FROM STAFF`, [],
+            `SELECT
+                s.STAFF_ID,
+                s.FULL_NAME AS STAFF_NAME,
+                s.EMAIL,
+                s.PHONE,
+                s.SUPERVISOR_ID,
+                sup.FULL_NAME AS SUPERVISOR_NAME
+            FROM STAFF s
+            LEFT JOIN STAFF sup
+                ON s.SUPERVISOR_ID = sup.STAFF_ID
+            `, [],
             { outFormat: oracledb.OUT_FORMAT_OBJECT }
         );
 
