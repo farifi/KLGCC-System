@@ -30,8 +30,13 @@ const AddStaffForm = ({ staffList, onCancel, onCreate }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onCreate(formData);
+  
+    onCreate({
+      ...formData,
+      SUPERVISOR_ID: formData.SUPERVISOR_ID || null
+    });
   };
+  
 
   return (
     <form className="edit-staff-form" onSubmit={handleSubmit}>
@@ -84,9 +89,10 @@ const AddStaffForm = ({ staffList, onCancel, onCreate }) => {
       <label>
         Supervisor Name
         <input
-          value={formData.SUPERVISOR_NAME}
-          readOnly
-        />
+            name="SUPERVISOR_NAME"
+            value={formData.SUPERVISOR_NAME}
+            readOnly
+          />
       </label>
 
       <div className="modal-actions">
@@ -94,7 +100,7 @@ const AddStaffForm = ({ staffList, onCancel, onCreate }) => {
           Cancel
         </button>
         <button type="submit">
-          Create
+          Add
         </button>
       </div>
     </form>

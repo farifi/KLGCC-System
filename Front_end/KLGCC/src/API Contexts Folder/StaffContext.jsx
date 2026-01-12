@@ -15,6 +15,16 @@ export const StaffProvider = ({ children }) => {
         }
     };
 
+    const createStaff = async (staff) => {
+        try {
+          const res = await API.post("/api/staff/createStaff", staff);
+          setStaffList(prev => [...prev, res.data.staff]);
+        } catch (err) {
+          alert("Failed to create staff");
+        }
+      };
+      
+
     const deleteStaff = async (staff_id) => {
         try {
             const res = await API.delete(`/api/staff/${staff_id}`);
@@ -40,7 +50,7 @@ export const StaffProvider = ({ children }) => {
 
 
     return (
-        <StaffContext.Provider value={{ staffList, fetchStaffList , deleteStaff, updateStaff}}>
+        <StaffContext.Provider value={{ staffList, fetchStaffList , deleteStaff, updateStaff, createStaff}}>
             {children}
         </StaffContext.Provider>
     );

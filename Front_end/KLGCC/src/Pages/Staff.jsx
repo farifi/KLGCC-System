@@ -15,7 +15,7 @@ const Staff = () => {
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
     const closeSidebar = () => setIsSidebarOpen(false);
     
-    const { staffList, fetchStaffList, updateStaff, deleteStaff } = useStaff();
+    const { staffList, fetchStaffList, updateStaff, deleteStaff, createStaff } = useStaff();
 
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [selectedStaff, setSelectedStaff] = useState(null);
@@ -94,11 +94,11 @@ const Staff = () => {
                 onClose={() => setIsAddOpen(false)}
                 >
                 <AddStaffForm
-                    staffList={staffList}
-                    onCancel={() => setIsAddOpen(false)}
-                    onCreate={(newStaff) => {
-                    addStaff(newStaff);
-                    setIsAddOpen(false);
+                        staffList={staffList}
+                        onCancel={() => setIsAddOpen(false)}
+                        onCreate={(newStaff) => {
+                        createStaff(newStaff);
+                        setIsAddOpen(false);
                     }}
                 />
             </Modal>
