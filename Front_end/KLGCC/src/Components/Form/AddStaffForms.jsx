@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import "../Components CSS files/EditStaffForm.css";
+import { useState } from "react";
+import "../Components CSS files/AddStaffForm.css";
 
-const EditStaffForm = ({ staff, staffList, onCancel, onSave }) => {
+const AddStaffForm = ({ staffList, onCancel, onCreate }) => {
   const [formData, setFormData] = useState({
     FULL_NAME: "",
     EMAIL: "",
@@ -10,26 +10,27 @@ const EditStaffForm = ({ staff, staffList, onCancel, onSave }) => {
     SUPERVISOR_NAME: ""
   });
 
-  useEffect(() => {
-    if (staff) {
-      setFormData({
-        FULL_NAME: staff.STAFF_NAME || "",
-        EMAIL: staff.EMAIL || "",
-        PHONE: staff.PHONE || "",
-        SUPERVISOR_ID: staff.SUPERVISOR_ID || "",
-        SUPERVISOR_NAME: staff.SUPERVISOR_NAME || ""
-      });
-    }
-  }, [staff]);
-
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === "SUPERVISOR_ID") {
+      const supervisor = staffList.find(
+        s => s.STAFF_ID === Number(value)
+      );
+
+      setFormData(prev => ({
+        ...prev,
+        SUPERVISOR_ID: value,
+        SUPERVISOR_NAME: supervisor ? supervisor.STAFF_NAME : ""
+      }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!staff) return;
-    onSave({ ...staff, ...formData });
+    onCreate(formData);
   };
 
   return (
@@ -63,23 +64,16 @@ const EditStaffForm = ({ staff, staffList, onCancel, onSave }) => {
           required
         />
       </label>
+
       <label>
         Supervisor
         <select
           name="SUPERVISOR_ID"
           value={formData.SUPERVISOR_ID}
-          onChange={(e) => {
-            const selectedId = e.target.value;
-            const selectedSupervisor = staffList.find(s => s.STAFF_ID === Number(selectedId));
-            setFormData(prev => ({
-              ...prev,
-              SUPERVISOR_ID: selectedId,
-              SUPERVISOR_NAME: selectedSupervisor ? selectedSupervisor.STAFF_NAME : ""
-            }));
-          }}
+          onChange={handleChange}
         >
           <option value="">-- None --</option>
-          {staffList.map((s) => (
+          {staffList.map(s => (
             <option key={s.STAFF_ID} value={s.STAFF_ID}>
               {s.STAFF_NAME} (ID: {s.STAFF_ID})
             </option>
@@ -87,12 +81,24 @@ const EditStaffForm = ({ staff, staffList, onCancel, onSave }) => {
         </select>
       </label>
 
+      <label>
+        Supervisor Name
+        <input
+          value={formData.SUPERVISOR_NAME}
+          readOnly
+        />
+      </label>
+
       <div className="modal-actions">
-        <button type="button" onClick={onCancel}>Cancel</button>
-        <button type="submit">Save</button>
+        <button type="button" onClick={onCancel}>
+          Cancel
+        </button>
+        <button type="submit">
+          Create
+        </button>
       </div>
     </form>
   );
 };
 
-export default EditStaffForm;
+export default AddStaffForm;

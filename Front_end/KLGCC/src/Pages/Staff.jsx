@@ -6,6 +6,7 @@ import Header from "../Components/Header.jsx";
 import Table from "../Components/Table.jsx";
 import Modal from "../Components/Modal.jsx";
 import EditStaffForm from "../Components/Form/EditStaffForm.jsx";
+import AddStaffForm from "../Components/Form/AddStaffForms.jsx";
 import "./Pages CSS files/DefaultTheme.css";
 
 const Staff = () => {
@@ -18,6 +19,7 @@ const Staff = () => {
 
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [selectedStaff, setSelectedStaff] = useState(null);
+    const [isAddOpen, setIsAddOpen] = useState(false);
 
     useEffect(() => {
         fetchStaffList();
@@ -61,6 +63,13 @@ const Staff = () => {
                 </div>
                 <div className="default-main">
                     <Header toggleSidebar={toggleSidebar} />
+                    <div className="table-header">
+                        <button 
+                            className="add-btn" 
+                            onClick={() => setIsAddOpen(true)}
+                        >+ Add Staff </button>
+                    </div>
+
                     <div className="default-content">
                         <Table title="Staff List" columns={staffColumns} data={staffList}/>
                         
@@ -71,11 +80,27 @@ const Staff = () => {
             <Modal isOpen={isEditOpen} title="Edit Staff" onClose={() => setIsEditOpen(false)}>
                 <EditStaffForm
                     staff={selectedStaff}
+                    staffList={staffList}  // <-- pass it here
                     onCancel={() => setIsEditOpen(false)}
                     onSave={(updatedStaff) => {
-                    updateStaff(updatedStaff); // update the context state
-                    setIsEditOpen(false);
-                }}/>
+                        updateStaff(updatedStaff);
+                        setIsEditOpen(false);
+                    }}
+                />
+            </Modal>
+            <Modal
+                isOpen={isAddOpen}
+                title="Create Staff"
+                onClose={() => setIsAddOpen(false)}
+                >
+                <AddStaffForm
+                    staffList={staffList}
+                    onCancel={() => setIsAddOpen(false)}
+                    onCreate={(newStaff) => {
+                    addStaff(newStaff);
+                    setIsAddOpen(false);
+                    }}
+                />
             </Modal>
         </div>
     );

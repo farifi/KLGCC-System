@@ -221,3 +221,29 @@
 .dashboard-card--side1 { grid-area: side1; }
 .dashboard-card--side2 { grid-area: side2; }
 .dashboard-card--txn { grid-area: txn; }
+
+.add-btn {
+  padding: 10px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1); /* frosted glass */
+  backdrop-filter: blur(10px);
+  color: #000000;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.add-btn:hover {
+  background: rgba(128, 128, 128, 0.307);
+  box-shadow: 6px 6px 20px rgba(103, 103, 103, 0.245);
+  transform: translateY(-2px);
+  color: #fffcfc;
+}
+
+.add-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
