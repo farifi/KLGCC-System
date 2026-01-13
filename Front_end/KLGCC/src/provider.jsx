@@ -3,6 +3,9 @@ import { StaffProvider } from "./API Contexts Folder/StaffContext";
 import { DashboardProvider } from "./API Contexts Folder/DashboardContext";
 import { BookingProvider } from "./API Contexts Folder/BookingContext";
 import { EquipmentProvider } from "./API Contexts Folder/EquipmentContext";
+import { CourseProvider } from "./API Contexts Folder/CourseContext";
+import { TeeTimeProvider } from "./API Contexts Folder/TeeTimeContext";
+import { CartProvider } from "./API Contexts Folder/CartContext";
 
 const Providers = ({ children }) => {
   return (
@@ -11,7 +14,13 @@ const Providers = ({ children }) => {
         <DashboardProvider>
           <BookingProvider>
             <EquipmentProvider>
-              {children}
+               <CourseProvider>
+                <TeeTimeProvider>
+                  <CartProvider>
+                    {children}
+                  </CartProvider>
+                </TeeTimeProvider>
+              </CourseProvider>
             </EquipmentProvider>
           </BookingProvider>
         </DashboardProvider> 

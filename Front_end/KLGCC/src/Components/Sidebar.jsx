@@ -22,6 +22,8 @@ const Sidebar = () => {
         // Exact match for root or dashboard
         if (path === "Dashboard" && (location.pathname === "/" || location.pathname === "/dashboard")) return true;
         if (path === "Staff" && (location.pathname === "/" || location.pathname === "/staff")) return true;
+        if (path === "Tee Time" && (location.pathname === "/" || location.pathname === "/teeTime")) return true;
+        if (path === "Course" && (location.pathname === "/" || location.pathname === "/course")) return true;
         
         const route = `/${path.toLowerCase().replace(/\s+/g, '-')}`;
         return location.pathname.startsWith(route);

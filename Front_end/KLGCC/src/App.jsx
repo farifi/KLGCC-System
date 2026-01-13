@@ -4,6 +4,9 @@ import Dashboard from './Pages/Dashboard';
 import Staff from './Pages/Staff';
 import Booking from './Pages/Booking';
 import Equipment from './Pages/Equipment';
+import TeeTime from './Pages/TeeTime';
+import Course from './Pages/Course';
+import Cart from './Pages/Cart';
 import ProtectedRoute from './ProtectedRoute';
 
 function App() {
@@ -16,6 +19,9 @@ function App() {
         <Route path="/staff" element={ <ProtectedRoute> <Staff /> </ProtectedRoute> }/>
         <Route path="/booking" element={ <ProtectedRoute> <Booking /> </ProtectedRoute> }/> 
         <Route path="/equipment" element={ <ProtectedRoute> <Equipment /> </ProtectedRoute> }/> 
+        <Route path="/tee-Time" element={ <ProtectedRoute> <TeeTime /> </ProtectedRoute> }/> 
+        <Route path="/course" element={ <ProtectedRoute> <Course /> </ProtectedRoute> }/> 
+        <Route path="/cart" element={ <ProtectedRoute> <Cart /> </ProtectedRoute> }/> 
       </Routes>
     </BrowserRouter>
   );
