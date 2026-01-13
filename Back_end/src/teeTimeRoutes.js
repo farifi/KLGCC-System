@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const customerController = require("./controllers/customer.controller");
+const teeTimeController = require("./controllers/teeTime.controller");
 const { authenticateToken } = require("./middleware/auth");
 
-router.get("/list", authenticateToken, customerController.customerList);
+router.get("/list", authenticateToken, teeTimeController.teeTimeList);
 
 module.exports = router;

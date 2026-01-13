@@ -35,7 +35,7 @@ export const StaffProvider = ({ children }) => {
         } catch (err) {
             alert("Failed to delete staff");
         }
-    } 
+    };
 
     const updateStaff = async (staff) => {
         try {
@@ -46,7 +46,7 @@ export const StaffProvider = ({ children }) => {
         } catch (err) {
             alert("Failed to update staff");
         }
-};
+    };
 
 
     return (

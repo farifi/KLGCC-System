@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import LandingPage from './Pages/LandingPage';
 import Dashboard from './Pages/Dashboard';
 import Staff from './Pages/Staff';
+import Booking from './Pages/Booking';
 import ProtectedRoute from './ProtectedRoute';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Route path="/LandingPage" element={<LandingPage />} />
         <Route path="/dashboard" element={ <ProtectedRoute> <Dashboard /> </ProtectedRoute> } />
         <Route path="/staff" element={ <ProtectedRoute> <Staff /> </ProtectedRoute> }/>
+        <Route path="/booking" element={ <ProtectedRoute> <Booking /> </ProtectedRoute> }/> 
       </Routes>
     </BrowserRouter>
   );

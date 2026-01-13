@@ -1,168 +1,210 @@
 const { getConnection } = require("../config/db.js");
 const oracledb = require("oracledb");
 
-// router.post("/updateBooking", authenticateToken, bookingController.bookingUpdate);
+// Helper: calculate OFFSET for pagination
+const getOffset = (page = 1, limit = 5) => (page - 1) * limit;
 
+// ---------------- Fetch Bookings with Pagination ----------------
 exports.bookingList = async (req, res) => {
   let conn;
+  const { status, page = 1, limit = 5 } = req.query;
+  const pageNum = parseInt(page, 10) || 1;
+  const limitNum = Math.min(parseInt(limit, 10) || 5, 100); // max 100 rows per page
 
   try {
     conn = await getConnection();
-    const bookingList = await conn.execute(
-      `SELECT * FROM BOOKING`, // need BookingList sql query,
-      [],
-      { outFormat: oracledb.OUT_FORMAT_OBJECT },
-    );
 
-    if (bookingList.row.length === 0) {
-      res.status(201).json({ message: "No record currently in the database" });
+    let query = `
+      SELECT 
+        B.BOOKING_ID,
+        B.BOOKING_DATE,
+        B.STATUS,
+        B.TOTAL_PRICE,
+        C.FULL_NAME AS CUSTOMER_NAME,
+        CR.COURSE_NAME,
+        T.START_TIME,
+        T.END_TIME
+      FROM BOOKING B
+      LEFT JOIN CUSTOMER C 
+        ON B.CUSTOMER_ID = C.CUSTOMER_ID
+      LEFT JOIN TEE_TIME T 
+        ON B.TEE_TIME_ID = T.TEE_TIME_ID
+      LEFT JOIN COURSE CR
+        ON T.COURSE_ID = CR.COURSE_ID
+    `;
+
+    const binds = {};
+
+    if (status) {
+      query += " WHERE B.STATUS = :status";
+      binds.status = status.toUpperCase();
     }
 
-    res.status(201).json({ bookingList: bookingList.row });
-  } catch {
-    if (!res.headerSent) {
-      res.status(500).json({ message: "Server error", error: err.message });
-    }
+    // Count total rows
+    const countQuery = `SELECT COUNT(*) AS TOTAL FROM (${query})`;
+    const countResult = await conn.execute(countQuery, binds, { outFormat: oracledb.OUT_FORMAT_OBJECT });
+    const totalRows = countResult.rows[0]?.TOTAL || 0;
+    const totalPages = Math.ceil(totalRows / limitNum) || 1;
+
+    // Add pagination
+    query += ` ORDER BY B.BOOKING_DATE DESC OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY`;
+    binds.offset = getOffset(pageNum, limitNum);
+    binds.limit = limitNum;
+
+    const result = await conn.execute(query, binds, { outFormat: oracledb.OUT_FORMAT_OBJECT });
+
+    res.status(200).json({
+      bookings: result.rows || [],
+      totalPages,
+    });
+
+  } catch (err) {
+    console.error("Error fetching bookings:", err);
+    res.status(500).json({
+      bookings: [],
+      totalPages: 1,
+      message: "Server error while fetching bookings",
+      error: err.message,
+    });
   } finally {
-    if (conn) {
-      try {
-        await conn.close();
-      } catch (err) {
-        console.error(err);
-      }
-    }
+    if (conn) await conn.close();
   }
 };
 
-exports.bookingUpdate = async (req, res) => {
-  let conn;
-
-  try {
-  } catch (error) {
-  } finally {
-  }
-};
-
+// ---------------- Create Booking ----------------
 exports.addBooking = async (req, res) => {
+  const { CUSTOMER_ID, TEE_TIME_ID, BOOKING_DATE, STATUS, TOTAL_PRICE } = req.body;
   let conn;
 
   try {
-  } catch (error) {
-  } finally {
-  }
-};
-
-exports.confirmBooking = async (req, res) => {
-  let conn;
-
-  const { bookingID, bookingConfirmation } = req.data;
-
-  try {
-    if (bookingConfirmation) {
-      res.status(400).json({ message: "booking is already confirmed" });
+    if (!CUSTOMER_ID || !TEE_TIME_ID || !BOOKING_DATE || !STATUS || TOTAL_PRICE == null) {
+      return res.status(400).json({ message: "Missing required booking fields" });
     }
 
     conn = await getConnection();
-
-    const bookingList = await conn.execute(
-      `
-      UPDATE BOOKING
-      SET BOOKING_CONFIRMATION = TRUE
-      WHERE BOOKING_ID = :bookingID`, // need BookingList sql query,
-      [bookingID],
-      { outFormat: oracledb.OUT_FORMAT_OBJECT },
+    await conn.execute(
+      `INSERT INTO BOOKING 
+       (BOOKING_ID, CUSTOMER_ID, TEE_TIME_ID, BOOKING_DATE, STATUS, TOTAL_PRICE)
+       VALUES (BOOKING_SEQ.NEXTVAL, :CUSTOMER_ID, :TEE_TIME_ID, TO_DATE(:BOOKING_DATE, 'YYYY-MM-DD'), :STATUS, :TOTAL_PRICE)`,
+      { CUSTOMER_ID, TEE_TIME_ID, BOOKING_DATE, STATUS: STATUS.toUpperCase(), TOTAL_PRICE },
+      { autoCommit: true }
     );
 
-    if (bookingList.row.length === 0) {
-      res
-        .status(201)
-        .json({ message: "The booking is not in the database currently" });
-    }
+    res.status(201).json({ message: "Booking created successfully" });
 
-    const bookingListConfirmed = await conn.execute(
-      `
-      UPDATE BOOKING
-      SET BOOKING_CONFIRMATION = "CONFIRMED"
-      WHERE BOOKING_ID = :bookingID`, // need BookingList sql query,
-      [bookingID],
-      { outFormat: oracledb.OUT_FORMAT_OBJECT },
-    );
-
-    if (!bookingListConfirmed) {
-      res.status(400).json({ message: "error booking confirmation" });
-    }
-
-    res.status(201).json({ message: "Booking confirmed successfully" });
-  } catch {
-    if (!res.headerSent) {
-      res.status(500).json({ message: "Server error", error: err.message });
-    }
+  } catch (err) {
+    console.error("Error creating booking:", err);
+    res.status(500).json({ message: "Server error while creating booking", error: err.message });
   } finally {
-    if (conn) {
-      try {
-        await conn.close();
-      } catch (err) {
-        console.error(err);
-      }
-    }
+    if (conn) await conn.close();
   }
 };
 
+// ---------------- Update Booking ----------------
+exports.bookingUpdate = async (req, res) => {
+  const { id } = req.params;
+  const { CUSTOMER_ID, TEE_TIME_ID, BOOKING_DATE, STATUS, TOTAL_PRICE } = req.body;
+  let conn;
+
+  try {
+    if (!id || !CUSTOMER_ID || !TEE_TIME_ID || !BOOKING_DATE || !STATUS || TOTAL_PRICE == null) {
+      return res.status(400).json({ message: "Missing required booking fields" });
+    }
+
+    conn = await getConnection();
+    await conn.execute(
+      `UPDATE BOOKING 
+       SET CUSTOMER_ID=:CUSTOMER_ID,
+           TEE_TIME_ID=:TEE_TIME_ID,
+           BOOKING_DATE=TO_DATE(:BOOKING_DATE,'YYYY-MM-DD'),
+           STATUS=:STATUS,
+           TOTAL_PRICE=:TOTAL_PRICE
+       WHERE BOOKING_ID=:id`,
+      { CUSTOMER_ID, TEE_TIME_ID, BOOKING_DATE, STATUS: STATUS.toUpperCase(), TOTAL_PRICE, id },
+      { autoCommit: true }
+    );
+
+    res.status(200).json({ message: "Booking updated successfully" });
+
+  } catch (err) {
+    console.error("Error updating booking:", err);
+    res.status(500).json({ message: "Server error while updating booking", error: err.message });
+  } finally {
+    if (conn) await conn.close();
+  }
+};
+
+// ---------------- Delete Booking ----------------
 exports.deleteBooking = async (req, res) => {
+  const { id } = req.params;
   let conn;
 
   try {
-  } catch (error) {
+    if (!id) return res.status(400).json({ message: "Booking ID is required" });
+
+    conn = await getConnection();
+    await conn.execute(
+      `DELETE FROM BOOKING WHERE BOOKING_ID=:id`,
+      { id },
+      { autoCommit: true }
+    );
+
+    res.status(200).json({ message: "Booking deleted successfully" });
+
+  } catch (err) {
+    console.error("Error deleting booking:", err);
+    res.status(500).json({ message: "Server error while deleting booking", error: err.message });
   } finally {
+    if (conn) await conn.close();
   }
 };
 
-exports.cancelBooking = async (req, res) => {
+// ---------------- Confirm Booking ----------------
+exports.confirmBooking = async (req, res) => {
+  const { id } = req.params;
   let conn;
 
-  const { bookingID, bookingConfirmation } = req.data;
+  try {
+    if (!id) return res.status(400).json({ message: "Booking ID is required" });
+
+    conn = await getConnection();
+    await conn.execute(
+      `UPDATE BOOKING SET STATUS='CONFIRMED' WHERE BOOKING_ID=:id`,
+      { id },
+      { autoCommit: true }
+    );
+
+    res.status(200).json({ message: "Booking confirmed successfully" });
+
+  } catch (err) {
+    console.error("Error confirming booking:", err);
+    res.status(500).json({ message: "Server error while confirming booking", error: err.message });
+  } finally {
+    if (conn) await conn.close();
+  }
+};
+
+// ---------------- Cancel Booking ----------------
+exports.cancelBooking = async (req, res) => {
+  const { id } = req.params;
+  let conn;
 
   try {
+    if (!id) return res.status(400).json({ message: "Booking ID is required" });
+
     conn = await getConnection();
-
-    const bookingList = await conn.execute(
-      `
-      UPDATE BOOKING
-      SET BOOKING_CONFIRMATION = TRUE
-      WHERE BOOKING_ID = :bookingID`, // need BookingList sql query,
-      [bookingID],
-      { outFormat: oracledb.OUT_FORMAT_OBJECT },
+    await conn.execute(
+      `UPDATE BOOKING SET STATUS='CANCELLED' WHERE BOOKING_ID=:id`,
+      { id },
+      { autoCommit: true }
     );
 
-    if (bookingList.row.length === 0) {
-      res.status(201).json({ message: "The booking is not in the database" });
-    }
+    res.status(200).json({ message: "Booking cancelled successfully" });
 
-    const bookingListConfirmed = await conn.execute(
-      `
-      UPDATE BOOKING
-      SET BOOKING_CONFIRMATION = "CANCELLED"
-      WHERE BOOKING_ID = :bookingID`, // need BookingList sql query,
-      [bookingID],
-      { outFormat: oracledb.OUT_FORMAT_OBJECT },
-    );
-
-    if (!bookingListConfirmed) {
-      res.status(400).json({ message: "Booking cancellation error" });
-    }
-
-    res.status(201).json({ message: "Booking is cancelled" });
-  } catch {
-    if (!res.headerSent) {
-      res.status(500).json({ message: "Server error", error: err.message });
-    }
+  } catch (err) {
+    console.error("Error cancelling booking:", err);
+    res.status(500).json({ message: "Server error while cancelling booking", error: err.message });
   } finally {
-    if (conn) {
-      try {
-        await conn.close();
-      } catch (err) {
-        console.error(err);
-      }
-    }
+    if (conn) await conn.close();
   }
 };

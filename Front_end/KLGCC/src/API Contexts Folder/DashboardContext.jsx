@@ -1,9 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import API from "../Api";
+import { useAuth } from "./AuthContext";
 
 const DashboardContext = createContext();
 
 export const DashboardProvider = ({ children }) => {
+
+  const { user } = useAuth();
   const [dashboardData, setDashboardData] = useState({
     totalBookingsRevenue: [],
     bookingTrend: [],
@@ -16,6 +19,7 @@ export const DashboardProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchDashboardData = async () => {
+      if (!user) return;
       try {
         const [
           totalBookingsRevenueRes,

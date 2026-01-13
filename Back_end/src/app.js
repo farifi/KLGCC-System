@@ -6,6 +6,8 @@ const authRoutes = require("./auth");
 const staffRoutes = require("./staffRoutes");
 const dashboardRoutes = require("./dashboardRoutes");
 const bookingRoutes = require("./bookingRoutes");
+const customerRoutes = require("./customerRoutes");
+const teeTimeRoutes = require("./teeTimeRoutes");
 
 const app = express();
 
@@ -33,5 +35,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/staff", staffRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/booking", bookingRoutes);
+app.use("/api/customer", customerRoutes);
+app.use("/api/teetime", teeTimeRoutes);
+
 
 module.exports = app;

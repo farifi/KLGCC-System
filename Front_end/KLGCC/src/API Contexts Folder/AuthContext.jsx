@@ -13,15 +13,23 @@ export const AuthProvider = ({ children }) => {
 
     // On initial load, ask backend if there is a valid session
     useEffect(() => {
+        const savedUser = localStorage.getItem("user");
+
+        // No saved session → skip backend check
+        if (!savedUser) {
+            setAuthLoading(false);
+            return;
+        }
+
         const checkSession = async () => {
             try {
                 const res = await API.get("/api/auth/protected");
                 if (res.data?.user) {
-                    setUser(res.data.user);
-                    localStorage.setItem("user", JSON.stringify(res.data.user));
+                setUser(res.data.user);
+                localStorage.setItem("user", JSON.stringify(res.data.user));
                 } else {
-                    setUser(null);
-                    localStorage.removeItem("user");
+                setUser(null);
+                localStorage.removeItem("user");
                 }
             } catch {
                 setUser(null);
