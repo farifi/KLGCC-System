@@ -3,13 +3,11 @@ import {
     LayoutDashboard, 
     ListTodo, 
     Calendar as CalendarIcon, 
-    Settings, 
-    Headphones, 
-    TrendingUp,                    // Logo for sidebar navigation page
-    Receipt, 
-    FileText, 
+    Package,  
+    Flag, 
+    Globe, 
     Users, 
-    Briefcase 
+    ShoppingCart 
 } from "lucide-react";
 import './Components CSS files/Sidebar.css';
 import { useAuth } from "../API Contexts Folder/AuthContext";
@@ -39,7 +37,10 @@ const Sidebar = () => {
         { label: "Staff", icon: ListTodo },
         { label: "Booking", icon: CalendarIcon },
         { label: "Customer", icon: Users },
-        { label: "Equipment", icon: Briefcase },
+        { label: "Equipment", icon: Package },
+        { label: "Course", icon: Globe },
+        { label: "Tee Time", icon: Flag },
+        { label: "Cart", icon: ShoppingCart },
     ];
 
     const renderMenuItem = (item) => {

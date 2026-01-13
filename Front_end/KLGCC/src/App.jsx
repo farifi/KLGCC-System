@@ -3,6 +3,7 @@ import LandingPage from './Pages/LandingPage';
 import Dashboard from './Pages/Dashboard';
 import Staff from './Pages/Staff';
 import Booking from './Pages/Booking';
+import Equipment from './Pages/Equipment';
 import ProtectedRoute from './ProtectedRoute';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route path="/dashboard" element={ <ProtectedRoute> <Dashboard /> </ProtectedRoute> } />
         <Route path="/staff" element={ <ProtectedRoute> <Staff /> </ProtectedRoute> }/>
         <Route path="/booking" element={ <ProtectedRoute> <Booking /> </ProtectedRoute> }/> 
+        <Route path="/equipment" element={ <ProtectedRoute> <Equipment /> </ProtectedRoute> }/> 
       </Routes>
     </BrowserRouter>
   );
